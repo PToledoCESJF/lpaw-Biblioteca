@@ -1,0 +1,76 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  font-size: 15px;
+  width: 10%;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  display: none;
+  height: 100%;
+  background-color: white;
+}
+
+.btn-agenda {
+  /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 4px 6px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 0px;
+  border-radius: 8px;
+}
+
+.contador {
+  background-color: green;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 12px;
+}
+
+.tr-hoje {
+  background-color: #b2dba1;
+}
+
+.AG {background-color: #269abc;} /* Blue */
+.AG:hover {background-color: #46b8da; color: white;}
+
+.CF {background-color: blue;} /* Blue */
+.CF:hover {background-color: background; color: white;}
+
+.AD {background-color: green;} /* Green */
+.AD:hover {background: #3e8f3e; color: white;}
+
+.EA {background-color: gray;} /* Gray */ 
+.EA:hover {background: #9d9d9d; color: white;}
+
+.AT {background-color: #d58512;} /* Orange */
+.AT:hover {background: orange; color: white;}
+
+.NC {background-color: #ff33cc;} /* Pink */ 
+.NC:hover {background: #ff66ff; color: white;}
+
+.CA {background-color: red;} /* Red */ 
+.CA:hover {background: #f44336; color: white;}
+
+.selecMed {background-color: white; border-color: green; color: green;}
+.selecMed:hover {background: green; color: white;}
+
+.selecDtHr {background-color: white; color: blue}
+.selecDtHr:hover {background: blue; color: white;}
+
