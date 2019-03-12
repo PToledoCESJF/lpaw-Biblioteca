@@ -1,6 +1,6 @@
 <?php
 
-class CategoriaDAO {
+class CategoriaDAO implements ModelDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;
@@ -49,7 +49,7 @@ class CategoriaDAO {
             $stmt->bindValue(':nome', $categoria->getNome());
             $stmt->bindValue(':descricao', $categoria->getDescricao());
             $stmt->bindValue(':assunto', $categoria->getAssunto());            
-            $stmt->bindValue(':id_', $categoria->getId_categoria());
+            $stmt->bindValue(':id_categoria', $categoria->getId_categoria());
             $stmt->execute();
         } catch (Exception $exc) {
             Erro::trataErro($exc);

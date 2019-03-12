@@ -1,6 +1,6 @@
 <?php
 
-class ExemplarDAO {
+class ExemplarDAO implements ModelDao {
     private $conexao;
     private $queryInserir;
     private $queryListar;
@@ -10,11 +10,11 @@ class ExemplarDAO {
     public function __construct() {
         try {
             $this->conexao = Conexao::conectar();
-            $this->queryInserir = "INSERT INTO tb_exemplar(livro, circular, numero) "
-                    . "VALUES(:livro, :circular, :numero)";
+            $this->queryInserir = "INSERT INTO tb_exemplar(livro, tipo) "
+                    . "VALUES(:livro, :tipo)";
             $this->queryListar = "SELECT * FROM tb_exemplar";
             $this->queryAtualizar = "UPDATE tb_exemplar SET livro = :livro, "
-                    . "circular = :circular, numero = :numero WHERE id_exemplar = :id_exemplar";
+                    . "tipo = :tipo WHERE id_exemplar = :id_exemplar";
             $this->queryExcluir = "DELETE FROM tb_exemplar WHERE id_exemplar = :id_exemplar";
         } catch (Exception $exc) {
             Erro::trataErro($exc);            
@@ -25,8 +25,7 @@ class ExemplarDAO {
         try {
             $stmt = $this->conexao->prepare($this->queryInserir);
             $stmt->bindValue(':livro', $exemplar->getLivro());
-            $stmt->bindValue(':circular', $exemplar->getCircular());
-            $stmt->bindValue(':numero', $exemplar->getNumero());
+            $stmt->bindValue(':tipo', $exemplar->getTipo());
             $stmt->execute();
         } catch (Exception $exc) {
             Erro::trataErro($exc);
@@ -47,8 +46,7 @@ class ExemplarDAO {
         try {
             $stmt = $this->conexao->prepare($this->queryAtualizar);
             $stmt->bindValue(':livro', $exemplar->getLivro());
-            $stmt->bindValue(':circular', $exemplar->getCircular());
-            $stmt->bindValue(':numero', $exemplar->getNumero());
+            $stmt->bindValue(':tipo', $exemplar->getTipo());
             $stmt->bindValue(':id_exemplar', $exemplar->getId_exemplar());
             $stmt->execute();
         } catch (Exception $exc) {

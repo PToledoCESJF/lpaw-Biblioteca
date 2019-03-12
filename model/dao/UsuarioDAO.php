@@ -1,7 +1,7 @@
 <?php
 
 
-class UsuarioDAO {
+class UsuarioDAO implements ModelDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;
@@ -11,12 +11,12 @@ class UsuarioDAO {
     public function __construct() {
         try {
             $this->conexao = Conexao::conectar();
-            $this->queryInserir = "INSERT INTO tb_pessoa(nome, grupo) "
-                    . "VALUES(:nome, :grupo)";
-            $this->queryListar = "SELECT * FROM tb_pessoa";
-            $this->queryAtualizar = "UPDATE tb_pessoa SET nome = :nome, grupo = :grupo, "
-                    . "WHERE id_pessoa = :id_pessoa";
-            $this->queryExcluir = "DELETE FROM tb_pessoa WHERE id_pessoa = :id_pessoa";
+            $this->queryInserir = "INSERT INTO tb_usuario(nome, grupo, email, senha) "
+                    . "VALUES(:nome, :grupo, :email, :senha)";
+            $this->queryListar = "SELECT * FROM tb_usuario";
+            $this->queryAtualizar = "UPDATE tb_usuario SET nome = :nome, grupo = :grupo, "
+                    . "email = :email, senha = :senha WHERE id_usuario = :id_usuario";
+            $this->queryExcluir = "DELETE FROM tb_usuario WHERE id_usuario = :id_usuario";
         } catch (Exception $exc) {
             Erro::trataErro($exc);            
         }
@@ -27,6 +27,8 @@ class UsuarioDAO {
             $stmt = $this->conexao->prepare($this->queryInserir);
             $stmt->bindValue(':nome', $usuario->getNome());
             $stmt->bindValue(':grupo', $usuario->getGrupo());
+            $stmt->bindValue(':email', $usuario->getEmail());
+            $stmt->bindValue(':senha', $usuario->getSenha());
             $stmt->execute();
         } catch (Exception $exc) {
             Erro::trataErro($exc);
@@ -48,7 +50,9 @@ class UsuarioDAO {
             $stmt = $this->conexao->prepare($this->queryAtualizar);
             $stmt->bindValue(':nome', $usuario->getNome());
             $stmt->bindValue(':grupo', $usuario->getGrupo());
-            $stmt->bindValue(':id_pessoa', $usuario->getId_pessoa());
+            $stmt->bindValue(':email', $usuario->getEmail());
+            $stmt->bindValue(':senha', $usuario->getSenha());
+            $stmt->bindValue(':id_usuario', $usuario->getId_usuario());
             $stmt->execute();
         } catch (Exception $exc) {
             Erro::trataErro($exc);
@@ -58,7 +62,7 @@ class UsuarioDAO {
     public function excluir($id){
         try {
             $stmt = $this->conexao->prepare($this->queryExcluir);
-            $stmt->bindValue(':id_pessoa', $id);
+            $stmt->bindValue(':id_usuario', $id);
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
