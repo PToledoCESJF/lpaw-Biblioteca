@@ -37,19 +37,19 @@ class Livro {
         return $this->edicao;
     }
 
-    function getEditora() {
-        return $this->editora;
-    }
-
     function getAno() {
         return $this->ano;
+    }
+
+    function getUpload() {
+        return $this->upload;
     }
 
     function getCategoria() {
         return $this->categoria;
     }
 
-    function getUpload() {
-        return $this->upload;
+    function getEditora() {
+        return $this->editora;
     }
 }    
