@@ -3,13 +3,13 @@
 class Exemplar {
     private $id_exemplar;
     private $livro;
-    private $circular = TRUE;
+    private $tipo = TRUE;
     private $numero;
     
-    public function __construct($id_exemplar, Livro $livro,  $circular, $numero) {
+    public function __construct($id_exemplar, Livro $livro,  $tipo, $numero) {
         $this->id_exemplar = $id_exemplar;
         $this->livro = $livro;
-        $this->circular = $circular;
+        $this->tipo = $tipo;
         $this->numero = $numero;
     }
 
@@ -21,8 +21,8 @@ class Exemplar {
         return $this->livro;
     }
 
-    public function getCircular() {
-        return $this->circular;
+    public function getTipo() {
+        return $this->tipo;
     }
 
     public function getNumero() {

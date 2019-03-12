@@ -1,14 +1,10 @@
 <?php
 
 class Funcionario extends Pessoa{
-    private $email;
-    private $senha;
     private $funcao;
     
     public function __construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao) {
-        parent::__construct($id_pessoa, $nome, $grupo);
-        $this->email = $email;
-        $this->senha = $senha;
+        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha);
         $this->funcao = $funcao;
     }
     
@@ -27,11 +23,11 @@ class Funcionario extends Pessoa{
     }
     
     public function getEmail() {
-        return $this->email;
+        return parent::getEmail();
     }
 
     public function getSenha() {
-        return $this->senha;
+        return parent::getSenha();
     }
 
     public function getFuncao() {

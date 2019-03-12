@@ -4,59 +4,52 @@ class Livro {
     private $id_livro;
     private $titulo;
     private $isbn;
-    private $autores;
     private $edicao;
-    private $editora;
     private $ano;
-    private $assunto;
     private $upload;
+    private $categoria;
+    private $editora;
     
-    public function __construct($id_livro, $titulo, $isbn, $autores, $edicao, $editora, $ano, Assunto $assunto, $upload) {
+    function __construct($id_livro, $titulo, $isbn, $edicao, $editora, $ano, $categoria, $upload) {
         $this->id_livro = $id_livro;
         $this->titulo = $titulo;
         $this->isbn = $isbn;
-        $this->autores = $autores;
         $this->edicao = $edicao;
-        $this->editora = $editora;
         $this->ano = $ano;
-        $this->assunto = $assunto;
         $this->upload = $upload;
+        $this->categoria = $categoria;
+        $this->editora = $editora;
     }
     
-    public function getId_livro() {
+    function getId_livro() {
         return $this->id_livro;
     }
 
-    public function getTitulo() {
+    function getTitulo() {
         return $this->titulo;
     }
 
-    public function getIsbn() {
+    function getIsbn() {
         return $this->isbn;
     }
 
-    public function getAutores() {
-        return $this->autores;
-    }
-
-    public function getEdicao() {
+    function getEdicao() {
         return $this->edicao;
     }
 
-    public function getEditora() {
+    function getEditora() {
         return $this->editora;
     }
 
-    public function getAno() {
+    function getAno() {
         return $this->ano;
     }
 
-    public function getAssunto() {
-        return $this->assunto;
+    function getCategoria() {
+        return $this->categoria;
     }
 
-    public function getUpload() {
+    function getUpload() {
         return $this->upload;
     }
-
-}
+}    
