@@ -1,9 +1,9 @@
 <?php
 
-class Bibliotecario extends Funcionario{
+class Bibliotecario extends Usuario{
     
-    public function __construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao) {
-        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao);
+    public function __construct($id_pessoa, $nome, $grupo, $email, $senha) {
+        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha);
     }
     
     // Métodos exclusivos de Bibliotecario
@@ -44,9 +44,5 @@ class Bibliotecario extends Funcionario{
     
     public function getSenha() {
         parent::getSenha();
-    }
-    
-    public function getFuncao() {
-        parent::getFuncao();
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-class Gerente extends Funcionario{
+class Gerente extends Usuario{
     
-    public function __construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao) {
-        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao);
+    public function __construct($id_pessoa, $nome, $grupo, $email, $senha) {
+        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha);
     }
     
     // Método exclusivo de Gerente
@@ -32,9 +32,5 @@ class Gerente extends Funcionario{
     
     public function getSenha() {
         parent::getSenha();
-    }
-    
-    public function getFuncao() {
-        parent::getFuncao();
     }
 }

@@ -1,32 +1,38 @@
 <?php
 
-class Usuario extends Pessoa{
+class Usuario {
+    private $id_usuario;
+    private $nome;
+    private $grupo;
+    private $email;
+    private $senha;
     
-    
-    public function __construct($id_pessoa, $nome, $grupo) {
-        parent::__construct($id_pessoa, $nome, $grupo);
-        
-    }
-    
-    // Método exclusivo de usuários
-    
-    public function consultarAcervo($pesquisa){
+    public function __construct($id_usuario, $nome, $grupo, $email, $senha) {
+        $this->id_usuario = $id_usuario;
+        $this->nome = $nome;
+        $this->grupo = $grupo;
+        $this->email = $email;
+        $this->senha = $senha;
         
     }
 
-    
-    // Métodos Getters
-    
-    public function getId_pessoa() {
-        return parent::getId_pessoa();
+    public function getId_usuario() {
+        return $this->id_usuario;
     }
 
     public function getNome() {
-        return parent::getNome();
-    }
-    
-    public function getGrupo() {
-        return parent::getGrupo();
+        return $this->nome;
     }
 
+    public function getGrupo() {
+        return $this->grupo;
+    }
+    
+    function getEmail() {
+        return $this->email;
+    }
+
+    function getSenha() {
+        return $this->senha;
+    }
 }

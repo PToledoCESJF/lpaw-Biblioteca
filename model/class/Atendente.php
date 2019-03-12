@@ -1,9 +1,9 @@
 <?php
 
-class Atendente extends Funcionario{
+class Atendente extends Usuario{
         
-    public function __construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao) {
-        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha, $funcao);
+    public function __construct($id_usuario, $nome, $grupo, $email, $senha) {
+        parent::__construct($id_usuario, $nome, $grupo, $email, $senha);
     }
     
     // Métodos exclusivos do Atendente
@@ -22,8 +22,8 @@ class Atendente extends Funcionario{
 
     // Getters
     
-    public function getId_pessoa() {
-        parent::getId_pessoa();
+    public function getId_usuario() {
+        parent::getId_usuario();
     }
     
     public function getNome() {
@@ -40,9 +40,5 @@ class Atendente extends Funcionario{
     
     public function getSenha() {
         parent::getSenha();
-    }
-    
-    public function getFuncao() {
-        parent::getFuncao();
     }
 }
