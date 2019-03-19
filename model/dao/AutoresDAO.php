@@ -1,6 +1,6 @@
 <?php
 
-class AutoresDAO implements ModelDao{
+class AutoresDAO implements iDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;

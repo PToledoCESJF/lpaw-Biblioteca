@@ -20,7 +20,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="./assunto-lista.php">Assunto</a></li>
+                <li><a href="./categoria-novo.php">Categoria</a></li>
                 <li><a href="./paciente-lista.php">Pacientes</a></li>
                 <li><a href="./cadastros.php">Cadastros</a></li>
             </ul>             

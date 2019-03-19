@@ -1,6 +1,6 @@
 <?php
 
-class EmprestimoDAO implements ModelDao{
+class EmprestimoDAO implements iDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;

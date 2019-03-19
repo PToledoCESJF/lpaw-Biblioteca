@@ -1,5 +1,5 @@
 <?php
-require_once './Global.php';
+require_once 'Global.php';
 
 class Conexao{
 

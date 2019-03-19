@@ -1,23 +1,26 @@
 <?php
 
-class CategoriaDAO implements ModelDao{
+require_once '../config/Global.php';
+
+class CategoriaDAO implements iDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;
+    private $queryBuscaPorId;
     private $queryAtualizar;
     private $queryExcluir;
     
-    public static function inserir(Categoria $categoria){
+    public static function inserir($categoria){
         try {
             $this->conexao = Conexao::conectar();
-            $this->queryInserir = "INSERT INTO tb_categoria(nome, descricao, assunto) "
-                    . "VALUES(:nome, :descricao, :assunto)";
+            $this->queryInserir = "INSERT INTO tb_categoria(nome_categoria, descricao, assunto) "
+                    . "VALUES(:nome_categoria, :descricao, :assunto)";
             $stmt = $this->conexao->prepare($this->queryInserir);
-            $stmt->bindValue(':nome', $categoria->getNome());
+            $stmt->bindValue(':nome_categoria', $categoria->getNomeCategoria());
             $stmt->bindValue(':descricao', $categoria->getDescricao());
             $stmt->bindValue(':assunto', $categoria->getAssunto());
             $stmt->execute();
-        } catch (PDOException $exc) {
+        } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
     }
@@ -34,28 +37,41 @@ class CategoriaDAO implements ModelDao{
         }
     }
     
-    public static function atualizar(Categoria $categoria){
+    public static function BuscarPorId($id){
         try {
             $this->conexao = Conexao::conectar();
-            $this->queryAtualizar = "UPDATE tb_categoria SET nome = :nome, descricao = :descricao, "
+            $this->queryBuscaPorId = "SELECT * FROM tb_categoria WHERE id_categoria = :id_categoria";
+            $stmt = $this->conexao->prepare($this->queryBuscaPorId);
+            $stmt->bindValue(':id_categoria', $id);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+    
+    public static function atualizar($categoria){
+        try {
+            $this->conexao = Conexao::conectar();
+            $this->queryAtualizar = "UPDATE tb_categoria SET nome_categoria = :nome_categoria, descricao = :descricao, "
                     . "assunto = :assunto WHERE id_categoria = :id_categoria";
             $stmt = $this->conexao->prepare($this->queryAtualizar);
-            $stmt->bindValue(':nome', $categoria->getNome());
+            $stmt->bindValue(':nome_categoria', $categoria->getNomeCategoria());
             $stmt->bindValue(':descricao', $categoria->getDescricao());
             $stmt->bindValue(':assunto', $categoria->getAssunto());            
-            $stmt->bindValue(':id_categoria', $categoria->getId_categoria());
+            $stmt->bindValue(':id_categoria', $categoria->getIdCategoria());
             $stmt->execute();
         } catch (PDOException $exc) {
             Erro::trataErro($exc);
         }
     }
     
-    public static function excluir($id){
+    public static function excluir($categoria){
         try {
             $this->conexao = Conexao::conectar();
             $this->queryExcluir = "DELETE FROM tb_categoria WHERE id_categoria = :id_categoria";
             $stmt = $this->conexao->prepare($this->queryExcluir);
-            $stmt->bindValue(':id_categoria', $id);
+            $stmt->bindValue(':id_categoria', $categoria->getIdCategoria());
         } catch (PDOException $exc) {
             Erro::trataErro($exc);
         }

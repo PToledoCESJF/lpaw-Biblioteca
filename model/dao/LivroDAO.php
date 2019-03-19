@@ -1,6 +1,6 @@
 <?php
 
-class LivroDAO implements ModelDao{
+class LivroDAO implements iDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;

@@ -1,7 +1,7 @@
 <?php
 
 
-class UsuarioDAO implements ModelDao{
+class UsuarioDAO implements iDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;

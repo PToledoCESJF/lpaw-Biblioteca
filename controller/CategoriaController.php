@@ -2,66 +2,63 @@
 
 require_once '../config/Global.php';
 
-    $method = filter_input(INPUT_POST, 'metodo');
-    $id_categoria = filter_input(INPUT_POST, 'id_categoria');
-    $nome_categoria = filter_input(INPUT_POST, 'nome_categoria');
-    $descricao = filter_input(INPUT_POST, 'descricao');
-    $assunto = filter_input(INPUT_POST, 'assunto');
+class CategoriaController implements iController {
+    private $method;
+    private $categoria;
+    
+    public function __construct($method, $categoria) {
+        $this->method = $method;
+        $this->categoria = $categoria;
+    }
 
-    if($method == "inserir"){
+    public function carregar(){
+        if($this->method === "inserir"){
+            echo '<pre>';
+            print_r('chegou 1');
+            echo '</pre>';
+            self::inserir($this->categoria);
+        }elseif ($this->method === "atualizar") {
+            self::atualizar($this->categoria);
+        }elseif ($this->method === "excluir") {
+            self::excluir($this->categoria);
+        }
+    }
+
+    public static function atualizar($categoria) {
+        CategoriaDAO::atualizar($categoria);
+        self::retornar();
+    }
+
+    public static function buscaPorId($id) {
+        $stmt = CategoriaDAO::BuscarPorId($id);
+        $categoria = new Categoria($stmt['id_categoria'], $stmt['nome_categoria'], 
+                $stmt['descricao'], $stmt['assunto']);
+        return $categoria;
+    }
+
+    public static function excluir($categoria) {
+        CategoriaDAO::excluir($categoria);
+        self::retornar();
+    }
+
+    public static function inserir($categoria) {
         try {
-            $id_categoria = false;
-            $categoria = new Categoria($id_categoria, $nome_categoria, $descricao, $assunto);
+            echo '<pre>';
+            print_r('chegou 2');
+            echo '</pre>';
             CategoriaDAO::inserir($categoria);
-        } catch (Exception $exc) {
-            Erro::trataErro($exc);
-        }   
-    }
-
-header('Location: ../view/categoria-lista.php');
-
-    if($method == "atualizar"){
-        try {
-            $assuntoController->atualizar(new Assunto($id_assunto, $assunto));
-            header('Location: ../view/assunto-lista.php');
-        } catch (Exception $exc) {
+            self::retornar();
+        } catch (PDOException $exc) {
             Erro::trataErro($exc);
         }
     }
 
-    if($method == "excluir"){
-        try {
-            $assuntoController->excluir($id_assunto);
-            header('Location: ../view/assunto-lista.php');
-        } catch (Exception $exc) {
-            Erro::trataErro($exc);
-        }
+    public static function listar() {
+        return CategoriaDAO::listar();
     }
-
-class CategoriaController implements ModelController{    
-
-    public function __construct() {
-        
-    }
-
-    public function atualizar(\Classe $c) {
-        
-    }
-
-    public function buscaPorId($id) {
-        
-    }
-
-    public function excluir($id) {
-        
-    }
-
-    public function inserir(\Classe $c) {
-        
-    }
-
-    public function listar() {
-        
+    
+    public static function retornar(){
+        header('Location: ../view/categoria-novo.php');
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-class ExemplarDAO implements ModelDao {
+class ExemplarDAO implements iDao {
     private $conexao;
     private $queryInserir;
     private $queryListar;

@@ -1,6 +1,6 @@
 <?php
 
-class EditoraDAO implements ModelDao{
+class EditoraDAO implements iDao{
     private $conexao;
     private $queryInserir;
     private $queryListar;
