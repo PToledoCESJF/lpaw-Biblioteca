@@ -2,13 +2,13 @@
 
 class Categoria {
     private $id_categoria;
-    private $nome;
+    private $nome_categoria;
     private $descricao;
     private $assunto;
     
-    public function __construct($id_categoria, $nome, $descricao, Assunto $assunto) {
+    public function __construct($id_categoria, $nome_categoria, $descricao, Assunto $assunto) {
         $this->id_categoria = $id_categoria;
-        $this->nome = $nome;
+        $this->nome_categoria = $nome_categoria;
         $this->descricao = $descricao;
         $this->assunto = $assunto;
     }
@@ -17,8 +17,8 @@ class Categoria {
         return $this->id_categoria;
     }
 
-    public function getNome() {
-        return $this->nome;
+    public function getNome_categoria() {
+        return $this->nome_categoria;
     }
 
     public function getDescricao() {

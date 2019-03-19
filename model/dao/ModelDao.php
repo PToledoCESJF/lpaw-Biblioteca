@@ -2,8 +2,6 @@
 
 interface ModelDao{
     
-    public function __construct();
-        
     public function inserir(Classe $c);
         
     public function listar();

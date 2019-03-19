@@ -15,6 +15,10 @@ class Usuario {
         $this->senha = $senha;
         
     }
+    
+    public function consultarAcervo($pesquisa){
+        
+    }
 
     public function getId_usuario() {
         return $this->id_usuario;

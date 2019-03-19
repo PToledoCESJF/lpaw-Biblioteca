@@ -10,9 +10,13 @@ class EmprestimoDAO implements ModelDao{
     public function __construct() {
         try {
             $this->conexao = Conexao::conectar();
-            $this->queryInserir = "INSERT INTO tb_emprestimo() VALUES(:)";
+            $this->queryInserir = "INSERT INTO tb_emprestimo(exemplar, usuario, "
+                    . "data_emprestimo, observacao) VALUES(:exemplar, :usuario, "
+                    . ":data_emprestimo, :observacao)";
             $this->queryListar = "SELECT * FROM tb_emprestimo";
-            $this->queryAtualizar = "UPDATE tb_emprestimo SET = :, WHERE = :";
+            $this->queryAtualizar = "UPDATE tb_emprestimo SET exemplar = :exemplar, "
+                    . "usuario = :usuario, data_emprestimo = :data_emprestimo, "
+                    . "observacao = :observacao WHERE = :";
             $this->queryExcluir = "DELETE FROM tb_emprestimo WHERE = :";
         } catch (Exception $exc) {
             Erro::trataErro($exc);            
