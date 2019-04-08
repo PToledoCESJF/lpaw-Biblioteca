@@ -13,20 +13,22 @@ class CategoriaController implements iController {
 
     public function carregar(){
         if($this->method === "inserir"){
-            echo '<pre>';
+            /*echo '<pre>';
             print_r('chegou 1');
-            echo '</pre>';
+            echo '</pre>';*/
             self::inserir($this->categoria);
         }elseif ($this->method === "atualizar") {
             self::atualizar($this->categoria);
-        }elseif ($this->method === "excluir") {
+        }elseif($this->method === "listar"){
+            self::listar();
+        }elseif($this->method === "excluir") {
             self::excluir($this->categoria);
         }
     }
 
     public static function atualizar($categoria) {
         CategoriaDAO::atualizar($categoria);
-        self::retornar();
+        retornar();
     }
 
     public static function buscaPorId($id) {
@@ -38,16 +40,13 @@ class CategoriaController implements iController {
 
     public static function excluir($categoria) {
         CategoriaDAO::excluir($categoria);
-        self::retornar();
+        retornar();
     }
 
     public static function inserir($categoria) {
         try {
-            echo '<pre>';
-            print_r('chegou 2');
-            echo '</pre>';
             CategoriaDAO::inserir($categoria);
-            self::retornar();
+            retornar();
         } catch (PDOException $exc) {
             Erro::trataErro($exc);
         }
@@ -57,7 +56,7 @@ class CategoriaController implements iController {
         return CategoriaDAO::listar();
     }
     
-    public static function retornar(){
+    public function retornar(){
         header('Location: ../view/categoria-novo.php');
     }
 

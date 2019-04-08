@@ -3,19 +3,13 @@
 require_once '../config/Global.php';
 
 class CategoriaDAO implements iDao{
-    private $conexao;
-    private $queryInserir;
-    private $queryListar;
-    private $queryBuscaPorId;
-    private $queryAtualizar;
-    private $queryExcluir;
-    
+
     public static function inserir($categoria){
         try {
-            $this->conexao = Conexao::conectar();
-            $this->queryInserir = "INSERT INTO tb_categoria(nome_categoria, descricao, assunto) "
+            $conexao = Conexao::conectar();
+            $queryInserir = "INSERT INTO tb_categoria(nome_categoria, descricao, assunto) "
                     . "VALUES(:nome_categoria, :descricao, :assunto)";
-            $stmt = $this->conexao->prepare($this->queryInserir);
+            $stmt = $conexao->prepare($queryInserir);
             $stmt->bindValue(':nome_categoria', $categoria->getNomeCategoria());
             $stmt->bindValue(':descricao', $categoria->getDescricao());
             $stmt->bindValue(':assunto', $categoria->getAssunto());
@@ -27,9 +21,9 @@ class CategoriaDAO implements iDao{
     
     public static function listar(){
         try {
-            $this->conexao = Conexao::conectar();
-            $this->queryListar = "SELECT * FROM tb_categoria";
-            $stmt = $this->conexao->query($this->queryListar);
+            $conexao = Conexao::conectar();
+            $queryListar = "SELECT * FROM tb_categoria";
+            $stmt = $conexao->prepare($queryListar);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $exc) {
