@@ -8,10 +8,8 @@ require_once '../config/Global.php';
     $descricao = filter_input(INPUT_POST, 'descricao');
     $assunto = filter_input(INPUT_POST, 'assunto');
     
+    echo 'sCategoria id: ' . $idCategoria;
+    
     $categoria = new Categoria($idCategoria, $nomeCategoria, $descricao, $assunto);
-    echo '<pre>';
-    print_r($categoria);
-    echo '</pre>';
-    $categoriaControll = new CategoriaController($method, $categoria);
 
-    $categoriaControll->carregar();
+    CategoriaController::carregar($method, $categoria);

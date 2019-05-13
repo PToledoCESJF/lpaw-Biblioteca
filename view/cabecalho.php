@@ -23,6 +23,7 @@
                 <li><a href="./acervo-lista.php">Acervo</a></li>
                 <li><a href="./categoria-lista.php">Categoria</a></li>
                 <li><a href="./cadastros.php">Cadastros</a></li>
+                <li><a href="./login.php">Login</a></li>
             </ul>             
         </div><!--/.navbar-collapse -->
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config/Config.php';
+require_once 'Config.php';
 
     spl_autoload_register('carregarClasse');
 

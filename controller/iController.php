@@ -2,16 +2,12 @@
 
 interface iController {
     
-    public function __construct($method, $source);
-
-    public function carregar();
+    public static function carregar($method, $source);
     
-    public static function inserir($surce);
+    public static function salvar($surce);
     
     public static function listar();
-    
-    public static function atualizar($surce);
-    
+        
     public static function buscaPorId($id);
 
     public static function excluir($surce);

@@ -1,29 +1,15 @@
 <?php
 
-class ExemplarDAO implements iDao {
-    private $conexao;
-    private $queryInserir;
-    private $queryListar;
-    private $queryAtualizar;
-    private $queryExcluir;
-    
-    public function __construct() {
-        try {
-            $this->conexao = Conexao::conectar();
-            $this->queryInserir = "INSERT INTO tb_exemplar(livro, tipo) "
-                    . "VALUES(:livro, :tipo)";
-            $this->queryListar = "SELECT * FROM tb_exemplar";
-            $this->queryAtualizar = "UPDATE tb_exemplar SET livro = :livro, "
-                    . "tipo = :tipo WHERE id_exemplar = :id_exemplar";
-            $this->queryExcluir = "DELETE FROM tb_exemplar WHERE id_exemplar = :id_exemplar";
-        } catch (Exception $exc) {
-            Erro::trataErro($exc);            
-        }
-    }
+require_once '../config/Global.php';
 
-    public function inserir(Exemplar $exemplar){
+class ExemplarDAO implements iDao {
+
+    public static function inserir($exemplar){
         try {
-            $stmt = $this->conexao->prepare($this->queryInserir);
+            $conexao = Conexao::conectar();
+            $queryInserir = "INSERT INTO tb_exemplar(livro, tipo) "
+                    . "VALUES(:livro, :tipo)";
+            $stmt = $conexao->prepare($queryInserir);
             $stmt->bindValue(':livro', $exemplar->getLivro());
             $stmt->bindValue(':tipo', $exemplar->getTipo());
             $stmt->execute();
@@ -32,9 +18,11 @@ class ExemplarDAO implements iDao {
         }
     }
     
-    public function listar(){
+    public static function listar(){
         try {
-            $stmt = $this->conexao->query($this->queryListar);
+            $conexao = Conexao::conectar();
+            $queryListar = "SELECT * FROM tb_exemplar";
+            $stmt = $conexao->query($queryListar);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (Exception $exc) {
@@ -42,9 +30,12 @@ class ExemplarDAO implements iDao {
         }
     }
     
-    public function atualizar(Exemplar $exemplar){
+    public static function atualizar($exemplar){
         try {
-            $stmt = $this->conexao->prepare($this->queryAtualizar);
+            $conexao = Conexao::conectar();
+            $queryAtualizar = "UPDATE tb_exemplar SET livro = :livro, "
+                    . "tipo = :tipo WHERE id_exemplar = :id_exemplar";
+            $stmt = $conexao->prepare($queryAtualizar);
             $stmt->bindValue(':livro', $exemplar->getLivro());
             $stmt->bindValue(':tipo', $exemplar->getTipo());
             $stmt->bindValue(':id_exemplar', $exemplar->getId_exemplar());
@@ -54,12 +45,19 @@ class ExemplarDAO implements iDao {
         }
     }
     
-    public function excluir($id){
+    public static function excluir($id){
         try {
-            $stmt = $this->conexao->prepare($this->queryExcluir);
+            $conexao = Conexao::conectar();
+            $queryExcluir = "DELETE FROM tb_exemplar WHERE id_exemplar = :id_exemplar";
+            $stmt = $conexao->prepare($queryExcluir);
             $stmt->bindValue(':id_exemplar', $id);
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
     }
+
+    public static function BuscarPorId($id) {
+        
+    }
+
 }

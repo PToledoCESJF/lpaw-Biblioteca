@@ -1,20 +1,15 @@
 <?php
 
+require_once '../config/Global.php';
+
 class EditoraDAO implements iDao{
     
-    public function __construct() {
-        try {
-            
-        } catch (Exception $exc) {
-            Erro::trataErro($exc);            
-        }
-    }
-
-    public function atualizar(Editora $editora) {
+    public static function atualizar($editora) {
         try {
             $conexao = Conexao::conectar();
-            $queryAtualizar = "UPDATE tb_editora SET nome_editora = :nome_editora, WHERE id_editora = :id_editora";
-            $stmt = $conexao->prepare($this->queryAtualizar);
+            $queryAtualizar = "UPDATE tb_editora SET nome_editora = :nome_editora, "
+                    . "WHERE id_editora = :id_editora";
+            $stmt = $conexao->prepare($queryAtualizar);
             $stmt->bindValue(':nome_editora', $editora->getNome_editora());
             $stmt->bindValue(':id_editora', $editora->getId_editora());
             $stmt->execute();
@@ -23,22 +18,22 @@ class EditoraDAO implements iDao{
         }
     }
 
-    public function excluir($id) {
+    public static function excluir($id) {
         try {
             $conexao = Conexao::conectar();
             $queryExcluir = "DELETE FROM tb_editora WHERE id_editora = :id_editora";
-            $stmt = $conexao->prepare($this->queryExcluir);
+            $stmt = $conexao->prepare($queryExcluir);
             $stmt->bindValue(':id_editora', $id);
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
     }
 
-    public function inserir(Editora $editora) {
+    public static function inserir($editora) {
         try {
             $conexao = Conexao::conectar();
             $queryInserir = "INSERT INTO tb_editora(nome_editora) VALUES(:nome_editora)";
-            $stmt = $conexao->prepare($this->queryInserir);
+            $stmt = $conexao->prepare($queryInserir);
             $stmt->bindValue(':nome_editora', $editora->getNome_editora());
             $stmt->execute();
         } catch (Exception $exc) {
@@ -46,11 +41,11 @@ class EditoraDAO implements iDao{
         }
     }
 
-    public function listar() {
+    public static function listar() {
         try {
             $conexao = Conexao::conectar();
             $queryListar = "SELECT * FROM tb_editora";
-            $stmt = $conexao->query($this->queryListar);
+            $stmt = $conexao->query($queryListar);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (Exception $exc) {

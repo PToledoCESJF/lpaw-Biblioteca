@@ -4,7 +4,7 @@ require_once '../config/Global.php';
 
 class AutoresDAO implements iDao{
     
-    public static function atualizar(Autores $autores) {
+    public static function atualizar($autores) {
         try {
             $conexao = Conexao::conectar();
             $queryAtualizar = "UPDATE tb_autores SET nome_autor = :nome_autor, WHERE id_autores = :id_autores";
@@ -28,7 +28,7 @@ class AutoresDAO implements iDao{
         }
     }
 
-    public static function inserir(Autores $autores) {
+    public static function inserir($autores) {
         try {
             $conexao = Conexao::conectar();
             $queryInserir = "INSERT INTO tb_autores(nome_autor) VALUES(:nome_autor)";

@@ -1,4 +1,12 @@
-<?php require_once './cabecalho.php' ?>
+<?php 
+
+require_once '../config/Global.php';
+
+Template::header();
+Template::navbar();
+Template::sidebar();
+
+?>
 
 <body>
     <div class="row">
@@ -9,8 +17,10 @@
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <img src="../assets/imagens/Fundo.jpg" class="img-responsive" >
+            
         </div>
     </div>
 </body>
-<?php require_once './rodape.php' ?>
+<?php 
+Template::footer();
+?>
