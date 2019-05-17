@@ -1,32 +1,29 @@
 <?php
 
-require_once '../config/Global.php';
-
-class CategoriaController implements iController {
-
-    public static function carregar($idCategoria, $nomeCategoria, $assunto){
-        
-        $categoria = new Categoria($idCategoria, $nomeCategoria, $assunto);
-        self::salvar($categoria);
+class AutorController {
+    
+    public static function carregar($idAutor, $nomeAutor){
+        $autor = new Autor($idAutor, $nomeAutor);
+        self::salvar($autor);
     }
 
     public static function carregarVazio(){
-        return new Categoria(NULL, NULL, NULL);
+        return new Autor(NULL, NULL);
     }
     
     public static function buscaPorId($id) {
-        $stmt = CategoriaDAO::BuscarPorId($id);
-        return new Categoria($stmt['id_categoria'], $stmt['nome_categoria'], $stmt['assunto']);
+        $stmt = AutorDAO::BuscarPorId($id);
+        return new Autor($stmt['id_autor'], $stmt['nome_autor']);
     }
 
-    public static function excluir($idCategoria) {
-        CategoriaDAO::excluir($idCategoria);
+    public static function excluir($id) {
+        AutorDAO::excluir($id);
         self::retornar();
     }
 
-    public static function salvar($categoria) {
+    public static function salvar($autor) {
         try {
-            CategoriaDAO::salvar($categoria);
+            AutorDAO::salvar($autor);
             self::retornar();
         } catch (PDOException $exc) {
             Erro::trataErro($exc);
@@ -34,11 +31,11 @@ class CategoriaController implements iController {
     }
 
     public static function listar() {
-        return CategoriaDAO::listar();
+        return AutorDAO::listar();
     }
     
     public static function retornar(){
-        header('Location: ../view/categoria.php');
+        header('Location: ../view/autor.php');
     }
     
     public static function tabelaPaginada(){
@@ -52,9 +49,9 @@ class CategoriaController implements iController {
                 $paginaAtual = 1;
             }
 
-            $dados = CategoriaDAO::tabelaDadosPorPagina($paginaAtual, QTD_REGISTROS);
+            $dados = AutorDAO::tabelaDadosPorPagina($paginaAtual, QTD_REGISTROS);
             
-            $valor = CategoriaDAO::tabelaTotalDeDados();
+            $valor = AutorDAO::tabelaTotalDeDados();
             
             $primeiraPagina = 1;
             $ultimaPagina = ceil($valor->total_registros / QTD_REGISTROS);
@@ -71,8 +68,7 @@ class CategoriaController implements iController {
                             <table class='table table-hover table-striped'>
                                 <thead>
                                     <th>id</th>
-                                    <th>Categoria</th>
-                                    <th>Assunto</th>
+                                    <th>Autor</th>
                                     <th class='acao'>Editar</th>
                                     <th class='acao'>Excluir</th>
                                 </thead>
@@ -80,20 +76,19 @@ class CategoriaController implements iController {
                 foreach($dados as $linha):
                 echo "
                     <tr>
-                        <td>$linha->id_categoria </td>
-                        <td>$linha->nome_categoria</td>
-                        <td>$linha->assunto</td>
+                        <td>$linha->id_autor </td>
+                        <td>$linha->nome_autor</td>
                         <td>
-                            <form action='categoria.php' method='POST'>
-                                <input type='hidden' name='id_categoria' value='$linha->id_categoria'>
+                            <form action='autor.php' method='POST'>
+                                <input type='hidden' name='id_autor' value='$linha->id_autor'>
                                 <input type='hidden' name='metodo' value='editar'>
                                 <button type='submit' class='btn btn-info active pe-7s-edit'></button>
                             </form>
                         </td>
 
                         <td>
-                            <form action='categoria.php' method='POST'>
-                                <input type='hidden' name='id_categoria' value='$linha->id_categoria'>
+                            <form action='autor.php' method='POST'>
+                                <input type='hidden' name='id_autor' value='$linha->id_autor'>
                                 <input type='hidden' name='metodo' value='excluir'>
                                 <button type='submit' class='btn btn-danger active pe-7s-trash'></button>
                             </form>

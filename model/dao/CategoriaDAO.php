@@ -9,15 +9,14 @@ class CategoriaDAO implements iDao{
             $conexao = Conexao::conectar();
             
             if($categoria->getIdCategoria() != NULL){
-                $stmt = $conexao->prepare("UPDATE tb_categoria SET nome_categoria = :nome_categoria, descricao = :descricao, "
+                $stmt = $conexao->prepare("UPDATE tb_categorias SET nome_categoria = :nome_categoria, "
                     . "assunto = :assunto WHERE id_categoria = :id_categoria");
                 $stmt->bindValue(':id_categoria', $categoria->getIdCategoria());
             } else {
-                $stmt = $conexao->prepare("INSERT INTO tb_categoria(nome_categoria, descricao, assunto) "
-                        . "VALUES(:nome_categoria, :descricao, :assunto)");
+                $stmt = $conexao->prepare("INSERT INTO tb_categorias(nome_categoria, assunto) "
+                        . "VALUES(:nome_categoria, :assunto)");
             }
             $stmt->bindValue(':nome_categoria', $categoria->getNomeCategoria());
-            $stmt->bindValue(':descricao', $categoria->getDescricao());
             $stmt->bindValue(':assunto', $categoria->getAssunto());
             $stmt->execute();
         } catch (Exception $exc) {
@@ -28,7 +27,7 @@ class CategoriaDAO implements iDao{
     public static function listar(){
         try {
             $conexao = Conexao::conectar();
-            $queryListar = "SELECT * FROM tb_categoria";
+            $queryListar = "SELECT * FROM tb_categorias";
             $stmt = $conexao->prepare($queryListar);
             $stmt->execute();
             return $stmt->fetchAll();
@@ -40,7 +39,7 @@ class CategoriaDAO implements iDao{
     public static function BuscarPorId($id){
         try {
             $conexao = Conexao::conectar();
-            $queryBuscaPorId = "SELECT * FROM tb_categoria WHERE id_categoria = :id_categoria";
+            $queryBuscaPorId = "SELECT * FROM tb_categorias WHERE id_categoria = :id_categoria";
             $stmt = $conexao->prepare($queryBuscaPorId);
             $stmt->bindValue(':id_categoria', $id);
             $stmt->execute();
@@ -53,7 +52,7 @@ class CategoriaDAO implements iDao{
     public static function excluir($idCategoria){
         try {
             $conexao = Conexao::conectar();
-            $queryExcluir = "DELETE FROM tb_categoria WHERE id_categoria = :id_categoria";
+            $queryExcluir = "DELETE FROM tb_categorias WHERE id_categoria = :id_categoria";
             $stmt = $conexao->prepare($queryExcluir);
             $stmt->bindValue(':id_categoria', $idCategoria);
             $stmt->execute();
@@ -63,22 +62,30 @@ class CategoriaDAO implements iDao{
     }
     
     public static function tabelaDadosPorPagina($paginaAtual, $qtdRegistros){
-        $conexao = Conexao::conectar();
-        $linhaInicial = ($paginaAtual - 1) * $qtdRegistros;
-        $queryConsulta = "SELECT * FROM tb_categoria LIMIT {$linhaInicial}, {$qtdRegistros}";
-        $stmt = $conexao->prepare($queryConsulta);
-        $stmt->execute();
+        try {
+            $conexao = Conexao::conectar();
+            $linhaInicial = ($paginaAtual - 1) * $qtdRegistros;
+            $queryConsulta = "SELECT * FROM tb_categorias LIMIT {$linhaInicial}, {$qtdRegistros}";
+            $stmt = $conexao->prepare($queryConsulta);
+            $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
     }
         
     public static function tabelaTotalDeDados(){
-        $conexao = Conexao::conectar();
-        $queryContador = "SELECT COUNT(*) AS total_registros FROM tb_categoria";
-        $stmtCont = $conexao->prepare($queryContador);
-        $stmtCont->execute();
+        try {
+            $conexao = Conexao::conectar();
+            $queryContador = "SELECT COUNT(*) AS total_registros FROM tb_categorias";
+            $stmtCont = $conexao->prepare($queryContador);
+            $stmtCont->execute();
 
-        return $stmtCont->fetch(PDO::FETCH_OBJ);
+            return $stmtCont->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
     }
     
 }

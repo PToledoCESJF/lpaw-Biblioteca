@@ -9,5 +9,10 @@ interface iDao{
     public static function excluir($id);
     
     public static function BuscarPorId($id);
+    
+    public static function tabelaDadosPorPagina($paginaAtual, $qtdRegistros);
+
+    public static function tabelaTotalDeDados();
+
 }
 

@@ -2,7 +2,7 @@
 
 interface iController {
     
-    public static function carregar($method, $source);
+    public static function carregarVazio();
     
     public static function salvar($surce);
     
@@ -10,7 +10,7 @@ interface iController {
         
     public static function buscaPorId($id);
 
-    public static function excluir($surce);
+    public static function excluir($id);
     
     public static function retornar();
 }

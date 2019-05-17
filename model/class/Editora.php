@@ -1,19 +1,19 @@
 <?php
 
 class Editora {
-    private $id_editora;
-    private $nome_editora;
+    private $idEditora;
+    private $nomeEditora;
     
-    function __construct($id_editora, $nome_editora) {
-        $this->id_editora = $id_editora;
-        $this->nome_editora = $nome_editora;
+    function __construct($idEditora, $nomeEditora) {
+        $this->idEditora = $idEditora;
+        $this->nomeEditora = $nomeEditora;
     }
 
-    function getId_editora() {
-        return $this->id_editora;
+    function getIdEditora() {
+        return $this->idEditora;
     }
 
-    function getNome_editora() {
-        return $this->nome_editora;
+    function getNomeEditora() {
+        return $this->nomeEditora;
     }
 }

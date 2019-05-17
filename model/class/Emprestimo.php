@@ -3,13 +3,13 @@
 class Emprestimo {
     private $exemplar;
     private $usuario;
-    private $data_emprestimo;
+    private $dataEmprestimo;
     private $observacao;
     
-    function __construct($exemplar, $usuario, $data_emprestimo, $observacao) {
+    function __construct($exemplar, $usuario, $dataEmprestimo, $observacao) {
         $this->exemplar = $exemplar;
         $this->usuario = $usuario;
-        $this->data_emprestimo = $data_emprestimo;
+        $this->dataEmprestimo = $dataEmprestimo;
         $this->observacao = $observacao;
     }
     
@@ -21,8 +21,8 @@ class Emprestimo {
         return $this->usuario;
     }
 
-    function getData_emprestimo() {
-        return $this->data_emprestimo;
+    function getDataEmprestimo() {
+        return $this->dataEmprestimo;
     }
 
     function getObservacao() {

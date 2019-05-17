@@ -1,7 +1,7 @@
 <?php
 
 class UtilSelect {
-    public static function grupoPessoa(){
+    public static function grupoUsuario(){
         return array('Funcionário', 'Usuário');
     }
     

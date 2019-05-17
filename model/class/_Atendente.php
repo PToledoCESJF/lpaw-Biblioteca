@@ -2,8 +2,8 @@
 
 class Atendente extends Usuario{
         
-    public function __construct($id_usuario, $nome, $grupo, $email, $senha) {
-        parent::__construct($id_usuario, $nome, $grupo, $email, $senha);
+    public function __construct($idUsuario, $nomeUsuario, $grupo, $email, $senha) {
+        parent::__construct($idUsuario, $nomeUsuario, $grupo, $email, $senha);
     }
     
     // Métodos exclusivos do Atendente
@@ -22,12 +22,12 @@ class Atendente extends Usuario{
 
     // Getters
     
-    public function getId_usuario() {
-        parent::getId_usuario();
+    public function getIdUsuario() {
+        parent::getIdUsuario();
     }
     
-    public function getNome() {
-        parent::getNome();
+    public function getNomeUsuario() {
+        parent::getNomeUsuario();
     }
     
     public function getGrupo() {

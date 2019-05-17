@@ -2,8 +2,8 @@
 
 class Gerente extends Usuario{
     
-    public function __construct($id_pessoa, $nome, $grupo, $email, $senha) {
-        parent::__construct($id_pessoa, $nome, $grupo, $email, $senha);
+    public function __construct($idUsuario, $nomeUsuario, $grupo, $email, $senha) {
+        parent::__construct($idUsuario, $nomeUsuario, $grupo, $email, $senha);
     }
     
     // Método exclusivo de Gerente
@@ -14,12 +14,12 @@ class Gerente extends Usuario{
     
     // Getters
     
-    public function getId_pessoa() {
-        parent::getId_pessoa();
+    public function getIdUsuario() {
+        parent::getIdUsuario();
     }
     
-    public function getNome() {
-        parent::getNome();
+    public function getNomeUsuario() {
+        parent::getNomeUsuario();
     }
     
     public function getGrupo() {

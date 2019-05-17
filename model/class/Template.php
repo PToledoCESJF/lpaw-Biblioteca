@@ -140,11 +140,13 @@ $(document).ready(function(){
         echo "
 <!-- inicio do menu lateral -->
 <div class='wrapper'>
-    <div class='sidebar' data-color='#' data-image='../assets/img/sidebar-6.png'>
+    <div class='sidebar' data-color='blue' data-image='../assets/img/sidebar-6.png'>
 
     <!--
 
-        Tip 1: you can change the color of the sidebar using: data-color='blue | azure | green | orange | red | purple'
+        Tip 1: you can change the color of the sidebar using: 
+        data-color='blue | azure | green | orange | red | purple'
+        
         Tip 2: you can also add an image using data-image tag
 
     -->
@@ -176,9 +178,9 @@ $(document).ready(function(){
                     </a>
                 </li>
                 <li>
-                    <a href='typography.html'>
+                    <a href='../view/autor.php'>
                         <i class='pe-7s-news-paper'></i>
-                        <p>Typography</p>
+                        <p>Autores</p>
                     </a>
                 </li>
                 <li>
@@ -279,11 +281,12 @@ $(document).ready(function(){
 
                               </a>
                               <ul class='dropdown-menu'>
-                                <li><a href='#'>Action</a></li>
-                                <li><a href='#'>Another action</a></li>
-                                <li><a href='#'>Something</a></li>
-                                <li><a href='#'>Another action</a></li>
-                                <li><a href='#'>Something</a></li>
+                                <li><a href='../view/usuario.php'>Usuários</a></li>
+                                <li><a href='../view/livro.php'>Livros</a></li>
+                                <li><a href='../view/exemplar.php'>Exemplar</a></li>
+                                <li><a href='../view/categoria.php'>Categorias</a></li>
+                                <li><a href='../view/editora.php'>Editoras</a></li>
+                                <li><a href='../view/autor.php'>Autores</a></li>
                                 <li class='divider'></li>
                                 <li><a href='#'>Separated link</a></li>
                               </ul>

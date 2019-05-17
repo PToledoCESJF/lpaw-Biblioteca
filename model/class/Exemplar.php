@@ -1,26 +1,26 @@
 <?php
 
 class Exemplar {
-    private $id_exemplar;
+    private $idExemplar;
     private $livro;
-    private $tipo = TRUE;
+    private $tipoExemplar;
     
-    public function __construct($id_exemplar, Livro $livro,  $tipo) {
-        $this->id_exemplar = $id_exemplar;
+    public function __construct($idExemplar, $livro,  $tipoExemplar) {
+        $this->idExemplar = $idExemplar;
         $this->livro = $livro;
-        $this->tipo = $tipo;
+        $this->tipoExemplar = $tipoExemplar;
     }
 
-    public function getId_exemplar() {
-        return $this->id_exemplar;
+    public function getIdExemplar() {
+        return $this->idExemplar;
     }
 
     public function getLivro() {
         return $this->livro;
     }
 
-    public function getTipo() {
-        return $this->tipo;
+    public function getTipoExemplar() {
+        return $this->tipoExemplar;
     }
 
 }
