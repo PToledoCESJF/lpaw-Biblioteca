@@ -2,8 +2,10 @@
 
 class LivroController implements iController{
     
-    public static function carregar($idLivro, $titulo, $isbn, $edicao, $editora, $ano, $categoria, $imagem, $upload){
-        $livro = new Livro($idLivro, $titulo, $isbn, $edicao, $editora, $ano, $categoria, $imagem, $upload);
+    public static function carregar($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
+            $categoria, $editora, $descricao){
+        $livro = new Livro($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
+                $categoria, $editora, $descricao);
         self::salvar($livro);
     }
     
@@ -14,7 +16,7 @@ class LivroController implements iController{
     public static function buscaPorId($id) {
         $stmt = LivroDAO::BuscarPorId($id);
         $livro = new Livro($stmt['id_livro'], $stmt['titulo'], $stmt['isbn'], $stmt['edicao'], 
-                $stmt['editora'], $stmt['ano'], $stmt['categoria'], $stmt['imagem'], $stmt['upload']);
+                $stmt['editora'], $stmt['ano'], $stmt['categoria'], $stmt['imagem'], $stmt['descricao']);
         return $livro;
     }
 

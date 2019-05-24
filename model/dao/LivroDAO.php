@@ -10,25 +10,26 @@ class LivroDAO implements iDao{
             
             if($livro->getIdLivro() != NULL){
                 $stmt = $conexao->prepare("UPDATE tb_livros SET  titulo = :titulo, isbn = :isbn, "
-                        . "edicao = :edicao, ano = :ano, upload = :upload, categoria = :categoria, "
-                        . "editora = :editora, imagem = :imagem WHERE id_livro = :id_livro");
+                        . "edicao = :edicao, ano = :ano, categoria = :categoria, "
+                        . "editora = :editora, imagem = :imagem, descricao = :descricao "
+                        . "WHERE id_livro = :id_livro");
 
                 $stmt->bindValue(':id_livro', $livro->getIdLivro());
                 
             } else {
                 $stmt = $conexao->prepare("INSERT INTO tb_livros(titulo, isbn, edicao, ano, "
-                        . "upload, categoria, editora, imagem) VALUES(:titulo, :isbn, :edicao, "
-                        . ":ano, :upload, :categoria, :editora, :imagem)");
+                        . "categoria, editora, imagem, descricao) VALUES(:titulo, :isbn, :edicao, "
+                        . ":ano, :categoria, :editora, :imagem, :descricao)");
             }
             
             $stmt->bindValue(':titulo', $livro->getTitulo());
             $stmt->bindValue(':isbn', $livro->getIsbn());
             $stmt->bindValue(':edicao', $livro->getEdicao());
             $stmt->bindValue(':ano', $livro->getAno());
-            $stmt->bindValue(':upload', $livro->getUpload());
             $stmt->bindValue(':categoria', $livro->getCategoria());
             $stmt->bindValue(':editora', $livro->getEditora());
             $stmt->bindValue(':imagem', $livro->getImagem());
+            $stmt->bindValue(':descricao', $livro->getDescricao());
             $stmt->execute();
         } catch (Exception $exc) {
             Erro::trataErro($exc);

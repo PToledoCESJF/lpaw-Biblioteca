@@ -7,20 +7,20 @@ class Livro {
     private $edicao;
     private $ano;
     private $imagem;
-    private $upload;
     private $categoria;
     private $editora;
+    private $descricao;
     
-    function __construct($idLivro, $titulo, $isbn, $edicao, $editora, $ano, $categoria, $imagem, $upload) {
+    function __construct($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, $categoria, $editora, $descricao) {
         $this->idLivro = $idLivro;
         $this->titulo = $titulo;
         $this->isbn = $isbn;
         $this->edicao = $edicao;
         $this->ano = $ano;
         $this->imagem = $imagem;
-        $this->upload = $upload;
         $this->categoria = $categoria;
         $this->editora = $editora;
+        $this->descricao = $descricao;
     }
     
     function getIdLivro() {
@@ -43,10 +43,6 @@ class Livro {
         return $this->ano;
     }
 
-    function getUpload() {
-        return $this->upload;
-    }
-
     function getCategoria() {
         return $this->categoria;
     }
@@ -58,6 +54,8 @@ class Livro {
     function getImagem() {
         return $this->imagem;
     }
-
-
+    
+    function getDescricao() {
+        return $this->descricao;
+    }
 }    

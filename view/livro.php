@@ -17,8 +17,8 @@ require_once '../config/Global.php';
             $editora = filter_input(INPUT_POST, 'editora');
             $ano = filter_input(INPUT_POST, 'ano');
             $categoria = filter_input(INPUT_POST, 'categoria');
-            $upload = filter_input(INPUT_POST, 'upload');
             $imagem = filter_input(INPUT_POST, 'imagem');
+            $descricao = filter_input(INPUT_POST, 'descricao');
 
             if($imagem == NULL || $imagem != $livro->getImagem()){ 
                 $imagensPermitidas = array("png", "jpeg", "jpg", "gif");
@@ -32,8 +32,8 @@ require_once '../config/Global.php';
                 }
             }
 
-            LivroController::carregar($idLivro, $titulo, $isbn, $edicao, 
-                    $editora, $ano, $categoria, $imagem, $upload);
+            LivroController::carregar(idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
+            $categoria, $editora, $descricao);
             
         }elseif($method === 'editar'){
             $livro = LivroController::buscaPorId($idLivro);
@@ -129,15 +129,18 @@ require_once '../config/Global.php';
                             </div> 
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="editora">Imagem</label>
                                         <input type="hidden" name="imagem" value="<?php echo $livro->getImagem() ?>">
                                         <input type="file" name="imagem" class="form-control btn-block">
                                     </div> 
-                                    <div class="col-md-6">
-                                        <label for="editora">Livro Digital</label>
-                                        <input type="file" name="upload" value="<?php echo $livro->getUpload() ?>" 
-                                               class="form-control btn-block">
+                                </div> 
+                            </div> 
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="descricao">Descrição</label>
+                                        <textarea name="descricao" rows="5" cols="40" class="form-control"><?php echo $livro->getImagem() ?></textarea>
                                     </div> 
                                 </div> 
                             </div> 
@@ -158,7 +161,6 @@ require_once '../config/Global.php';
             </div>
             <div class="col-md-4">
                 <div class="card card-user">
-                    
                     <div class="img-responsive">
                         <img src="../assets/img/books/<?php echo $livro->getImagem() ?>" alt="..."/>
                     </div>
