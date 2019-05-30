@@ -4,16 +4,22 @@ class Autor {
     private $idAutor;
     private $nomeAutor;
     
-    function __construct($idAutor, $nomeAutor) {
+    public function __construct($idAutor, $nomeAutor) {
         $this->idAutor = $idAutor;
         $this->nomeAutor = $nomeAutor;
     }
     
-    function getIdAutor() {
+    public static function carregarVazio(){
+        $this->idAutor = NULL;
+        $this->nomeAutor = NULL;
+        return new Autor($this->idAutor, $this->nomeAutor);
+    }
+    
+    public function getIdAutor() {
         return $this->idAutor;
     }
 
-    function getNomeAutor() {
+    public function getNomeAutor() {
         return $this->nomeAutor;
     }
 

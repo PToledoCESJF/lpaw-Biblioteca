@@ -12,6 +12,19 @@ require_once '../config/Global.php';
         if($method === 'salvar'){
             $livro = filter_input(INPUT_POST, 'livro');
             $tipoExemplar = filter_input(INPUT_POST, 'tipo_exemplar');
+            
+             if($idExemplar == NULL){ 
+                $tiposPermitidos = array("pdf", "doc", "docx", "odt", "txt");
+                $extensao = pathinfo($_FILES['upload']['name'], PATHINFO_EXTENSION);
+                if(in_array($extensao, $tiposPermitidos)){
+                    $pasta = '../assets/books/';
+                    $temporario = $_FILES['upload']['tmp_name'];
+                    $idExemplar = uniqid() . '.' . $extensao;
+
+                    move_uploaded_file($temporario, $pasta . $idExemplar);
+                }
+            }
+            
             ExemplarController::carregar($idExemplar, $livro, $tipoExemplar);
         }elseif($method === 'editar'){
             $exemplar = ExemplarController::buscaPorId($idExemplar);
@@ -24,8 +37,10 @@ require_once '../config/Global.php';
         Erro::trataErro($exc);
     }
     Template::header();
-    Template::navbar();
+    // Para que os menus fiquem responsivos, é necessário que 
+    // o sidebar() venha antes do navbar()
     Template::sidebar();
+    Template::navbar();
     ?>
 
 <!-- Inicio da Edição -->
@@ -39,7 +54,7 @@ require_once '../config/Global.php';
                         <h3 class="title">Exemplar</h3>
                     </div>
                     <div class="content">
-                        <form action="exemplar.php" method="post">
+                        <form action="exemplar.php" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="metodo" value="salvar">
                             <input type="hidden" name="id_exemplar" value="<?php echo $exemplar->getIdExemplar() ?>">
                             <div class="row">
@@ -76,6 +91,7 @@ require_once '../config/Global.php';
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="col-md-9">
+                                            <input type="file" name="upload" class="form-control btn-block">
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -91,7 +107,7 @@ require_once '../config/Global.php';
             </div>
         </div>
     </div>
-</div>
+
 
 <!-- Inicio da Listagem -->
 

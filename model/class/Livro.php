@@ -11,7 +11,7 @@ class Livro {
     private $editora;
     private $descricao;
     
-    function __construct($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, $categoria, $editora, $descricao) {
+    public function __construct($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, $categoria, $editora, $descricao) {
         $this->idLivro = $idLivro;
         $this->titulo = $titulo;
         $this->isbn = $isbn;
@@ -22,40 +22,55 @@ class Livro {
         $this->editora = $editora;
         $this->descricao = $descricao;
     }
+
+    public static function carregarVazio() {
+        $this->idLivro = NULL;
+        $this->titulo = NULL;
+        $this->isbn = NULL;
+        $this->edicao = NULL;
+        $this->ano = NULL;
+        $this->imagem = NULL;
+        $this->categoria = NULL;
+        $this->editora = NULL;
+        $this->descricao = NULL;
+        
+        return new Livro($this->idLivro, $this->titulo, $this->isbn, $this->edicao, 
+             $this->ano, $this->imagem, $this->categoria, $this->editora, $this->descricao);
+    }
     
-    function getIdLivro() {
+    public function getIdLivro() {
         return $this->idLivro;
     }
 
-    function getTitulo() {
+    public function getTitulo() {
         return $this->titulo;
     }
 
-    function getIsbn() {
+    public function getIsbn() {
         return $this->isbn;
     }
 
-    function getEdicao() {
+    public function getEdicao() {
         return $this->edicao;
     }
 
-    function getAno() {
+    public function getAno() {
         return $this->ano;
     }
 
-    function getCategoria() {
+    public function getCategoria() {
         return $this->categoria;
     }
 
-    function getEditora() {
+    public function getEditora() {
         return $this->editora;
     }
     
-    function getImagem() {
+    public function getImagem() {
         return $this->imagem;
     }
     
-    function getDescricao() {
+    public function getDescricao() {
         return $this->descricao;
     }
 }    

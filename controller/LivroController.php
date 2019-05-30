@@ -10,13 +10,13 @@ class LivroController implements iController{
     }
     
     public static function carregarVazio() {
-        return new Livro(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        return Livro::carregarVazio();
     }
     
     public static function buscaPorId($id) {
         $stmt = LivroDAO::BuscarPorId($id);
         $livro = new Livro($stmt['id_livro'], $stmt['titulo'], $stmt['isbn'], $stmt['edicao'], 
-                $stmt['editora'], $stmt['ano'], $stmt['categoria'], $stmt['imagem'], $stmt['descricao']);
+                $stmt['ano'], $stmt['imagem'], $stmt['categoria'], $stmt['editora'], $stmt['descricao']);
         return $livro;
     }
 

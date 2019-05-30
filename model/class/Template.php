@@ -5,91 +5,92 @@ class Template{
     public static function header(){
         
         echo "
-<!DOCTYPE html>
-<html lang='pt-br'>
-<head>
-    <meta charset='utf-8' />
-    <link rel='icon' type='image/png' href='../assets/img/favicon.ico'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
+            <!DOCTYPE html>
+            <html lang='pt-br'>
+            <head>
+                <meta charset='utf-8' />
+                <link rel='icon' type='image/png' href='../assets/img/favicon.ico'>
+                <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
 
-    <title>Título: </title>
+                <title>BiblioteCasa: </title>
 
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name='viewport' content='width=device-width' />
+                <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+                <meta name='viewport' content='width=device-width' />
 
+                <!-- Bootstrap core CSS     -->
+                <link href='../assets/css/bootstrap.min.css' rel='stylesheet' />
 
-    <!-- Bootstrap core CSS     -->
-    <link href='../assets/css/bootstrap.min.css' rel='stylesheet' />
+                <!-- Animation library for notifications   -->
+                <link href='../assets/css/animate.min.css' rel='stylesheet'/>
 
-    <!-- Animation library for notifications   -->
-    <link href='../assets/css/animate.min.css' rel='stylesheet'/>
+                <!--  Light Bootstrap Table core CSS    -->
+                <link href='../assets/css/light-bootstrap-dashboard.css?v=1.4.0' rel='stylesheet'/>
 
-    <!--  Light Bootstrap Table core CSS    -->
-    <link href='../assets/css/light-bootstrap-dashboard.css?v=1.4.0' rel='stylesheet'/>
-
-
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href='../assets/css/demo.css' rel='stylesheet' />
+                <!--  CSS for Demo Purpose, don't include it in your project     -->
+                <link href='../assets/css/demo.css' rel='stylesheet' />
 
 
-    <!--     Fonts and icons     -->
-    <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href='../assets/css/pe-icon-7-stroke.css' rel='stylesheet' />
-    ";
+                <!--     Fonts and icons     -->
+                <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet'>
+                <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+                <link href='../assets/css/pe-icon-7-stroke.css' rel='stylesheet' />
+                ";
 
-    /*
-    session_start();
-    if ((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) {
-        unset($_SESSION['login']);
-        unset($_SESSION['senha']);
-        header('location:login.php');
-    }
-    $logado = $_SESSION['login'];
-      */  
+        /*
+        session_start();
+        if ((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) {
+            unset($_SESSION['login']);
+            unset($_SESSION['senha']);
+            header('location:login.php');
+        }
+        $logado = $_SESSION['login'];
+          */  
 
-echo "
-</head>
-<body>
-";
+        echo "
+            </head>
+            <body>
+            ";
     }
     
     public static function footer(){
         
         echo "
-    <footer class='footer'>
-    <div class='container-fluid'>
-        <nav class='pull-left'>
-            <ul>
-                <li>
-                    <a href='#'>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href='#'>
-                        Nossa Empresa
-                    </a>
-                </li>
-                <li>
-                    <a href='#'>
-                        Portfolio
-                    </a>
-                </li>
-                <li>
-                    <a href='#'>
-                       Blog
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <p class='copyright pull-right'>
-            &copy; <script>document.write(new Date().getFullYear())</script> <a href='http://www.creative-tim.com'>Ler Para Crer</a>, made with love for a better web
-        </p>
+        <footer class='footer'>
+            <div class='container-fluid'>
+                <nav class='pull-left'>
+                    <ul>
+                        <li>
+                            <a href='#'>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href='#'>
+                                Nossa Empresa
+                            </a>
+                        </li>
+                        <li>
+                            <a href='#'>
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href='#'>
+                               Blog
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class='copyright pull-right'>
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href='http://www.creative-tim.com'>Ler Para Crer</a>, made with love for a better web
+                </p>
+            </div>
+        </footer>
+    
+    <!-- Fecha o main-panel do Menu Superior -->
     </div>
-    </footer>
-
-</div>
+    
+<!-- Fecha o wrapper do Menu Lateral -->
 </div>
 
 
@@ -154,13 +155,13 @@ $(document).ready(function(){
     	<div class='sidebar-wrapper'>
             <div class='logo'>
                 <a href='../view/index.php' class='simple-text'>
-                    Biblioteca Ler para Crer
+                    BiblioteCasa
                 </a>
             </div>
 
             <ul class='nav'>
                 <li class='active'>
-                    <a href='dashboard.html'>
+                    <a href='../view/index.php'>
                         <i class='pe-7s-notebook'></i>
                         <p>Acervo</p>
                     </a>

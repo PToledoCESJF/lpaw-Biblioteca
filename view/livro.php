@@ -32,7 +32,7 @@ require_once '../config/Global.php';
                 }
             }
 
-            LivroController::carregar(idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
+            LivroController::carregar($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
             $categoria, $editora, $descricao);
             
         }elseif($method === 'editar'){
@@ -46,8 +46,10 @@ require_once '../config/Global.php';
         Erro::trataErro($exc);
     }
     Template::header();
-    Template::navbar();
+    // Para que os menus fiquem responsivos, é necessário que 
+    // o sidebar() venha antes do navbar()
     Template::sidebar();
+    Template::navbar();
     ?>
 
 <!-- Inicio da Edição -->
@@ -55,7 +57,7 @@ require_once '../config/Global.php';
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="header">
                         <h3 class="title">Livro</h3>
@@ -140,7 +142,7 @@ require_once '../config/Global.php';
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label for="descricao">Descrição</label>
-                                        <textarea name="descricao" rows="5" cols="40" class="form-control"><?php echo $livro->getImagem() ?></textarea>
+                                        <textarea name="descricao" rows="5" cols="40" class="form-control"><?php echo $livro->getDescricao() ?></textarea>
                                     </div> 
                                 </div> 
                             </div> 
@@ -159,17 +161,17 @@ require_once '../config/Global.php';
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card card-user">
-                    <div class="img-responsive">
-                        <img src="../assets/img/books/<?php echo $livro->getImagem() ?>" alt="..."/>
+                    <div class="card">
+                        <img class='card-img-top img-responsive' 
+                             src="../assets/img/books/<?php echo $livro->getImagem() ?>" alt="..."/>
                     </div>
                     
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 <!-- Inicio da Listagem -->
 

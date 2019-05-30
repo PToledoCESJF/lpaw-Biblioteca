@@ -22,8 +22,10 @@ require_once '../config/Global.php';
         Erro::trataErro($exc);
     }
     Template::header();
-    Template::navbar();
+    // Para que os menus fiquem responsivos, é necessário que 
+    // o sidebar() venha antes do navbar()
     Template::sidebar();
+    Template::navbar();
     ?>
 
 <!-- Inicio da Edição -->
@@ -64,7 +66,7 @@ require_once '../config/Global.php';
             </div>
         </div>
     </div>
-</div>
+
 
 <!-- Inicio da Listagem -->
 

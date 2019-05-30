@@ -8,16 +8,16 @@ class ExemplarDAO implements iDao {
         try {
             $conexao = Conexao::conectar();
             
-            if($exemplar->getIdExemplar() != NULL){
+            if(self::BuscarPorId($exemplar->getIdExemplar())){
                 $stmt = $conexao->prepare("UPDATE tb_exemplares SET livro = :livro, "
                         . "tipo_exemplar = :tipo_exemplar WHERE id_exemplar = :id_exemplar");
                 
-                $stmt->bindValue(':id_exemplar', $exemplar->getIdExemplar());
             }else{
-                $stmt = $conexao->prepare("INSERT INTO tb_exemplares(livro, tipo_exemplar) "
-                        . "VALUES(:livro, :tipo_exemplar)");
+                $stmt = $conexao->prepare("INSERT INTO tb_exemplares(id_exemplar, livro, tipo_exemplar) "
+                        . "VALUES(:id_exemplar, :livro, :tipo_exemplar)");
                 
             }
+            $stmt->bindValue(':id_exemplar', $exemplar->getIdExemplar());
             $stmt->bindValue(':livro', $exemplar->getLivro());
             $stmt->bindValue(':tipo_exemplar', $exemplar->getTipoExemplar());
             $stmt->execute();

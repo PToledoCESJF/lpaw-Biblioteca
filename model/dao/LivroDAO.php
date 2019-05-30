@@ -17,9 +17,10 @@ class LivroDAO implements iDao{
                 $stmt->bindValue(':id_livro', $livro->getIdLivro());
                 
             } else {
-                $stmt = $conexao->prepare("INSERT INTO tb_livros(titulo, isbn, edicao, ano, "
-                        . "categoria, editora, imagem, descricao) VALUES(:titulo, :isbn, :edicao, "
-                        . ":ano, :categoria, :editora, :imagem, :descricao)");
+                $stmt = $conexao->prepare("INSERT INTO tb_livros(titulo, isbn, edicao, "
+                        . "ano, categoria, editora, imagem, descricao) "
+                        . "VALUES(:titulo, :isbn, :edicao, :ano, :categoria, "
+                        . ":editora, :imagem, :descricao)");
             }
             
             $stmt->bindValue(':titulo', $livro->getTitulo());
