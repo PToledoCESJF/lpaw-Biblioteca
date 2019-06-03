@@ -439,7 +439,7 @@ input:focus {
 }
 
 .sidebar[data-image]:after, .sidebar.has-image:after {
-    opacity: .65;
+    opacity: .77;
 }
 
 .sidebar[data-color="blue"]:after {
@@ -1841,12 +1841,12 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .navbar-default {
-    background-color: black;
+    background-color: rgba(255, 255, 255, 0.96);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navbar-default .navbar-nav > li > a:not(.btn) {
-    color: #FFFFFF;
+    color: #9A9A9A;
 }
 
 .navbar-default .navbar-nav > .active > a,
@@ -1980,7 +1980,7 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .footer {
-    background-color: #000000;
+    background-color: #FFFFFF;
     line-height: 20px;
 }
 

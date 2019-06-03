@@ -22,21 +22,6 @@ class Livro {
         $this->editora = $editora;
         $this->descricao = $descricao;
     }
-
-    public static function carregarVazio() {
-        $this->idLivro = NULL;
-        $this->titulo = NULL;
-        $this->isbn = NULL;
-        $this->edicao = NULL;
-        $this->ano = NULL;
-        $this->imagem = NULL;
-        $this->categoria = NULL;
-        $this->editora = NULL;
-        $this->descricao = NULL;
-        
-        return new Livro($this->idLivro, $this->titulo, $this->isbn, $this->edicao, 
-             $this->ano, $this->imagem, $this->categoria, $this->editora, $this->descricao);
-    }
     
     public function getIdLivro() {
         return $this->idLivro;

@@ -10,7 +10,7 @@ class LivroController implements iController{
     }
     
     public static function carregarVazio() {
-        return Livro::carregarVazio();
+        return new Livro(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
     
     public static function buscaPorId($id) {

@@ -9,12 +9,6 @@ class Autor {
         $this->nomeAutor = $nomeAutor;
     }
     
-    public static function carregarVazio(){
-        $this->idAutor = NULL;
-        $this->nomeAutor = NULL;
-        return new Autor($this->idAutor, $this->nomeAutor);
-    }
-    
     public function getIdAutor() {
         return $this->idAutor;
     }

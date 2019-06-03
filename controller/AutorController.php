@@ -8,7 +8,7 @@ class AutorController {
     }
 
     public static function carregarVazio(){
-        return Autor::carregarVazio();
+        return new Autor(NULL, NULL);
     }
     
     public static function buscaPorId($id) {

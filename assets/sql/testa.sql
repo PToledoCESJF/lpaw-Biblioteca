@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27-Maio-2019 às 17:27
+-- Generation Time: 31-Maio-2019 às 15:39
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `biblioteca`
+
+USE `biblioteca`
 --
 
 -- --------------------------------------------------------
@@ -28,10 +30,11 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `tb_autores`
 --
 
-CREATE TABLE `tb_autores` (
-  `id_autor` int(11) NOT NULL,
-  `nome_autor` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `tb_autores` (
+  `id_autor` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_autor` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_autor`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `tb_autores`
@@ -49,18 +52,20 @@ INSERT INTO `tb_autores` (`id_autor`, `nome_autor`) VALUES
 -- Estrutura da tabela `tb_categorias`
 --
 
-CREATE TABLE `tb_categorias` (
-  `id_categoria` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_categorias` (
+  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
   `nome_categoria` varchar(255) NOT NULL,
-  `assunto` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `assunto` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_categoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `tb_categorias`
 --
 
 INSERT INTO `tb_categorias` (`id_categoria`, `nome_categoria`, `assunto`) VALUES
-(1, 'InformÃ¡tica', 'Livro de Informatica');
+(1, 'InformÃ¡tica', 'Livro de Informatica para a famÃ­lia'),
+(2, 'Infanto Juvenil', 'Livro para a crianÃ§ada');
 
 -- --------------------------------------------------------
 
@@ -68,10 +73,11 @@ INSERT INTO `tb_categorias` (`id_categoria`, `nome_categoria`, `assunto`) VALUES
 -- Estrutura da tabela `tb_editoras`
 --
 
-CREATE TABLE `tb_editoras` (
-  `id_editora` int(11) NOT NULL,
-  `nome_editora` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `tb_editoras` (
+  `id_editora` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_editora` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_editora`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `tb_editoras`
@@ -91,11 +97,14 @@ INSERT INTO `tb_editoras` (`id_editora`, `nome_editora`) VALUES
 -- Estrutura da tabela `tb_emprestimos`
 --
 
-CREATE TABLE `tb_emprestimos` (
+CREATE TABLE IF NOT EXISTS `tb_emprestimos` (
   `exemplar` varchar(100) NOT NULL,
   `usuario` int(11) NOT NULL,
   `data_emprestimo` date NOT NULL,
-  `observacao` text
+  `observacao` text,
+  PRIMARY KEY (`exemplar`,`usuario`,`data_emprestimo`),
+  KEY `fk_tb_exemplar_has_tb_pessoa_tb_pessoa1_idx` (`usuario`),
+  KEY `fk_tb_exemplar_has_tb_pessoa_tb_exemplar1_idx` (`exemplar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -104,10 +113,12 @@ CREATE TABLE `tb_emprestimos` (
 -- Estrutura da tabela `tb_exemplares`
 --
 
-CREATE TABLE `tb_exemplares` (
+CREATE TABLE IF NOT EXISTS `tb_exemplares` (
   `id_exemplar` varchar(100) NOT NULL,
   `livro` int(11) NOT NULL,
-  `tipo_exemplar` int(11) NOT NULL
+  `tipo_exemplar` int(11) NOT NULL,
+  PRIMARY KEY (`id_exemplar`),
+  KEY `fk_tb_exemplar_tb_livro1_idx` (`livro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -123,8 +134,8 @@ INSERT INTO `tb_exemplares` (`id_exemplar`, `livro`, `tipo_exemplar`) VALUES
 -- Estrutura da tabela `tb_livros`
 --
 
-CREATE TABLE `tb_livros` (
-  `id_livro` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_livros` (
+  `id_livro` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(255) NOT NULL,
   `isbn` varchar(45) NOT NULL,
   `edicao` varchar(45) DEFAULT NULL,
@@ -132,8 +143,12 @@ CREATE TABLE `tb_livros` (
   `imagem` varchar(100) DEFAULT NULL,
   `categoria` int(11) NOT NULL,
   `editora` int(11) NOT NULL,
-  `descricao` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `descricao` text,
+  PRIMARY KEY (`id_livro`),
+  UNIQUE KEY `isbn_UNIQUE` (`isbn`),
+  KEY `fk_tb_livro_tb_categoria1_idx` (`categoria`),
+  KEY `fk_tb_livro_tb_editora1_idx` (`editora`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `tb_livros`
@@ -146,7 +161,8 @@ INSERT INTO `tb_livros` (`id_livro`, `titulo`, `isbn`, `edicao`, `ano`, `imagem`
 (4, 'IntegraÃ§Ã£o ContÃ­nua Com Jenkins: Automatize O Ciclo De Desenvolvimento, Testes E ImplantaÃ§Ã£o De AplicaÃ§Ãµes', '978-85-7522-723-7', '1Âª EdiÃ§Ã£o', 2019, '5cea17a1d0323.jpg', 1, 3, 'Neste livro, vocÃª entenderÃ¡ os conceitos e as diferenÃ§as entre Continuous Integration, Continuous Delivery e Continuous Deploy. ConhecerÃ¡ um caso de uso do Jenkins ao ser integrado com as ferramentas: Gogs, Maven, Nexus, SonarQube, Docker, Terraform e Shell Script. Esse conjunto de ferramentas permite automatizar um ciclo de desenvolvimento, testes e implantaÃ§Ã£o de uma aplicaÃ§Ã£o web. VocÃª tambÃ©m conhecerÃ¡ alguns conceitos prÃ³prios do Jenkins, aprenderÃ¡ a configurÃ¡-lo como cÃ³digo, alterar o tema, instalar plugins, gerenciar usuÃ¡rios, credenciais e escrever pipelines. Para ler e praticar os conhecimentos compartilhados neste livro nÃ£o Ã© necessÃ¡rio nenhum conhecimento prÃ©vio sobre Jenkins; o pÃºblico-alvo sÃ£o estudantes da Ã¡rea de Tecnologia da InformaÃ§Ã£o, administradores de sistemas, administradores de rede, desenvolvedores e gerentes.'),
 (5, 'Engenharia de Software: Uma Abordagem Profissional', '978-85-8055-534-9', '8Âª EdiÃ§Ã£o', 2016, '5cea184799fc5.jpg', 1, 4, 'Com mais de trÃªs dÃ©cadas de lideranÃ§a de mercado, Engenharia de Software chega Ã  sua 8Âª ediÃ§Ã£o como o mais abrangente guia sobre essa importante Ã¡rea.Totalmente revisada e reestruturada, esta nova ediÃ§Ã£o foi amplamente atualizada para incluir os novos tÃ³picos da â€œengenharia do sÃ©culo 21â€. CapÃ­tulos inÃ©ditos abordam a seguranÃ§a de software e os desafios especÃ­ficos ao desenvolvimento para aplicativos mÃ³veis. ConteÃºdos novos tambÃ©m foram incluÃ­dos em capÃ­tulos existentes, e caixas de texto informativas e conteÃºdos auxiliares foram expandidos, deixando este guia ainda mais prÃ¡tico para uso em sala de aula e em estudos autodidatas.'),
 (6, 'Implantando a GovernanÃ§a de TI. Da EstratÃ©gia Ã  GestÃ£o de Processos e ServiÃ§os ', '978-85-7452-658-4', '4Âª EdiÃ§Ã£o', 2014, '5cea19549d025.jpg', 1, 6, 'Este livro apresenta uma visÃ£o integrada e inovadora de GovernanÃ§a de TI que pode ser adaptada para vÃ¡rios ambientes organizacionais.\r\nA partir de um modelo genÃ©rico, os autores detalham as etapas de planejamento, implementaÃ§Ã£o e gestÃ£o da GovernanÃ§a de TI, abrangendo desde o plano do Programa de GovernanÃ§a de TI, passando pelo alinhamento estratÃ©gico da TI ao negÃ³cio, a elaboraÃ§Ã£o do PortfÃ³lio de TI, as operaÃ§Ãµes de serviÃ§os de TI, os modelos de relacionamento com usuÃ¡rios e fornecedores e, por fim, a gestÃ£o do desempenho e do valor da TI.\r\nNesta nova ediÃ§Ã£o sÃ£o analisados as caracterÃ­sticas e os benefÃ­cios de mais de 30 modelos de melhores prÃ¡ticas que podem ser aplicados aos processos de TI, dentre eles: CobiT, ITIL, ISO/IEC 20000, USMBOK, os principais modelos do PMI (PMBOK, GestÃ£o de PortfÃ³lio e GestÃ£o de Programas), PRINCE2, ISO 27001 e 27002, eSCM-SP e eSCM-CL, CMMI, MPS-Br, BPM CBOK, BABOK, BSC, Seis Sigma e outros modelos. AlÃ©m disso, mostra os modelos agrupados por disciplina e representa de forma clara o relacionamento entre os modelos de melhores prÃ¡ticas.\r\nEsta ediÃ§Ã£o traz tambÃ©m capÃ­tulos especÃ­ficos acerca do impacto de tecnologias emergentes sobre a GovernanÃ§a de TI, da sua utilizaÃ§Ã£o em pequenas e mÃ©dias empresas e no Governo e estÃ¡ enriquecida com os resultados obtidos em alguns cases do mercado brasileiro.'),
-(7, 'ITIL - guia de implantaÃ§Ã£o', '978-85-352-6854-6', '1Âª EdiÃ§Ã£o', 2013, '5cea19d403218.jpg', 1, 5, 'O material que vocÃª encontrarÃ¡ neste livro Ã© resultado de uma experiÃªncia de mais de 25 anos na Ã¡rea de suporte a usuÃ¡rios. Fundamentado por sua experiÃªncia como analista de suporte, coordenador de equipes, consultor, instrutor, projetista de ferramentas para atendimento a usuÃ¡rios e empresÃ¡rio ligado ao setor, o autor pretende retransmitir ao leitor, no formato de â€œliÃ§Ãµes aprendidasâ€, centenas de aprendizados que acumulou ao longo dos anos. SÃ£o experiÃªncias em ambientes de pequeno, mÃ©dio e grande portes, empresas pÃºblicas e privadas, antes, durante e apÃ³s o advento da adoÃ§Ã£o das melhores prÃ¡ticas de gestÃ£o de serviÃ§os de TI. A diferenÃ§a entre saber o que fazer e saber como fazer nunca foi tÃ£o importante. Se vocÃª jÃ¡ tem o conhecimento teÃ³rico sobre gestÃ£o de serviÃ§os de TI, usando a ITIL ou nÃ£o, terÃ¡ entÃ£o neste material uma grande fonte de informaÃ§Ã£o sobre como aplicar na prÃ¡tica tudo o que jÃ¡ conhece. Um guia definitivo? Jamais. Mas um bom comeÃ§o, sem dÃºvida. Com uma abordagem bem humorada e cheia de analogias, ITIL â€“ GUIA DE IMPLANTAÃ‡ÃƒO lhe mostrarÃ¡ centenas de exemplos nos quais as estratÃ©gias sugeridas tem seu embasamento. Prepare-se para aplicar todos os conceitos que jÃ¡ absorveu atÃ© agora, com uma visÃ£o realmente inovadora para o assunto. EsqueÃ§a todos os livros de revisÃ£o de conceitos que jÃ¡ viu. Aqui, o que vocÃª verÃ¡ sÃ£o as melhores prÃ¡ticas colocadas em prÃ¡tica.');
+(7, 'ITIL - guia de implantaÃ§Ã£o', '978-85-352-6854-6', '1Âª EdiÃ§Ã£o', 2013, '5cea19d403218.jpg', 1, 5, 'O material que vocÃª encontrarÃ¡ neste livro Ã© resultado de uma experiÃªncia de mais de 25 anos na Ã¡rea de suporte a usuÃ¡rios. Fundamentado por sua experiÃªncia como analista de suporte, coordenador de equipes, consultor, instrutor, projetista de ferramentas para atendimento a usuÃ¡rios e empresÃ¡rio ligado ao setor, o autor pretende retransmitir ao leitor, no formato de â€œliÃ§Ãµes aprendidasâ€, centenas de aprendizados que acumulou ao longo dos anos. SÃ£o experiÃªncias em ambientes de pequeno, mÃ©dio e grande portes, empresas pÃºblicas e privadas, antes, durante e apÃ³s o advento da adoÃ§Ã£o das melhores prÃ¡ticas de gestÃ£o de serviÃ§os de TI. A diferenÃ§a entre saber o que fazer e saber como fazer nunca foi tÃ£o importante. Se vocÃª jÃ¡ tem o conhecimento teÃ³rico sobre gestÃ£o de serviÃ§os de TI, usando a ITIL ou nÃ£o, terÃ¡ entÃ£o neste material uma grande fonte de informaÃ§Ã£o sobre como aplicar na prÃ¡tica tudo o que jÃ¡ conhece. Um guia definitivo? Jamais. Mas um bom comeÃ§o, sem dÃºvida. Com uma abordagem bem humorada e cheia de analogias, ITIL â€“ GUIA DE IMPLANTAÃ‡ÃƒO lhe mostrarÃ¡ centenas de exemplos nos quais as estratÃ©gias sugeridas tem seu embasamento. Prepare-se para aplicar todos os conceitos que jÃ¡ absorveu atÃ© agora, com uma visÃ£o realmente inovadora para o assunto. EsqueÃ§a todos os livros de revisÃ£o de conceitos que jÃ¡ viu. Aqui, o que vocÃª verÃ¡ sÃ£o as melhores prÃ¡ticas colocadas em prÃ¡tica.'),
+(8, 'Engenharia de software: CONCEITOS E PRÃTICAS', '978-85-3526-0847', '1Âª EdiÃ§Ã£o', 2013, '5cec8566cd280.jpg', 1, 5, 'O SWEBOK (Software Engineering Book of Knowledge), organizado pela IEE Computer Society, foi um avanÃ§o da Ã¡rea de engenharia de software.  Adotado como padrÃ£o internacional desde 2006 (ISSO/IEC TR 19759), sistematiza os conhecimentos necessÃ¡rios para todo engenheiro de software.Em Engenharia de Software, sÃ£o abordadas sete das dez Ã¡reas de conhecimento relacionadas ao SWEBOK: Teste, ManutenÃ§Ã£o, Gerenciamento de ConfiguraÃ§Ã£o, Gerenciamento de Engenharia, Processo de Engenharia, Ferramentas e MÃ©todos e Qualidade.  As demais â€“ Requisitos, Design e ConstruÃ§Ã£o â€“ sÃ£o abordadas no livro AnÃ¡lise e Projeto de Sistemas de InformaÃ§Ã£o Orientados a Objetos (Elsevier Editora, 2011). Juntos, eles formam a bibliografia mais completa sobre engenharia de software editada no Brasil.A profundidade com que os tÃ³picos sÃ£o tratados Ã© adequada a estudantes de graduaÃ§Ã£o dos cursos Sistemas de InformaÃ§Ã£o e CiÃªncia da ComputaÃ§Ã£o. Dessa forma, espera-se contribuir para que esses alunos possam desempenhar adequadamente a funÃ§Ã£o de engenheiro de software no mercado de trabalho. AlÃ©m disso, o livro tambÃ©m pode ser de grande valia para profissionais que tenham interesse em atualizar seus conhecimentos ou dar o primeiro passo para a implantaÃ§Ã£o de processos produtivos mais organizados em suas empresas. Por fim, esse livro Ã© direcionado a todos aqueles que acreditam e trabalham para que o Brasil possa se tornar uma referÃªncia mundial na Ã¡rea de produÃ§Ã£o de software, esbanjando qualidade e criatividade.');
 
 -- --------------------------------------------------------
 
@@ -154,10 +170,13 @@ INSERT INTO `tb_livros` (`id_livro`, `titulo`, `isbn`, `edicao`, `ano`, `imagem`
 -- Estrutura da tabela `tb_livros_autores`
 --
 
-CREATE TABLE `tb_livros_autores` (
-  `id_livro_autor` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_livros_autores` (
+  `id_livro_autor` int(11) NOT NULL AUTO_INCREMENT,
   `livro` int(11) NOT NULL,
-  `autor` int(11) NOT NULL
+  `autor` int(11) NOT NULL,
+  PRIMARY KEY (`id_livro_autor`),
+  KEY `fk_livros_autores_autores_idx` (`autor`),
+  KEY `fk_livros_autores_livros_idx` (`livro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -166,114 +185,15 @@ CREATE TABLE `tb_livros_autores` (
 -- Estrutura da tabela `tb_usuarios`
 --
 
-CREATE TABLE `tb_usuarios` (
-  `id_usuario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_usuarios` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `nome_usuario` varchar(255) NOT NULL,
   `grupo` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL
+  `senha` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tb_autores`
---
-ALTER TABLE `tb_autores`
-  ADD PRIMARY KEY (`id_autor`);
-
---
--- Indexes for table `tb_categorias`
---
-ALTER TABLE `tb_categorias`
-  ADD PRIMARY KEY (`id_categoria`);
-
---
--- Indexes for table `tb_editoras`
---
-ALTER TABLE `tb_editoras`
-  ADD PRIMARY KEY (`id_editora`);
-
---
--- Indexes for table `tb_emprestimos`
---
-ALTER TABLE `tb_emprestimos`
-  ADD PRIMARY KEY (`exemplar`,`usuario`,`data_emprestimo`),
-  ADD KEY `fk_tb_exemplar_has_tb_pessoa_tb_pessoa1_idx` (`usuario`),
-  ADD KEY `fk_tb_exemplar_has_tb_pessoa_tb_exemplar1_idx` (`exemplar`);
-
---
--- Indexes for table `tb_exemplares`
---
-ALTER TABLE `tb_exemplares`
-  ADD PRIMARY KEY (`id_exemplar`),
-  ADD KEY `fk_tb_exemplar_tb_livro1_idx` (`livro`);
-
---
--- Indexes for table `tb_livros`
---
-ALTER TABLE `tb_livros`
-  ADD PRIMARY KEY (`id_livro`),
-  ADD UNIQUE KEY `isbn_UNIQUE` (`isbn`),
-  ADD KEY `fk_tb_livro_tb_categoria1_idx` (`categoria`),
-  ADD KEY `fk_tb_livro_tb_editora1_idx` (`editora`);
-
---
--- Indexes for table `tb_livros_autores`
---
-ALTER TABLE `tb_livros_autores`
-  ADD PRIMARY KEY (`id_livro_autor`),
-  ADD KEY `fk_livros_autores_autores_idx` (`autor`),
-  ADD KEY `fk_livros_autores_livros_idx` (`livro`);
-
---
--- Indexes for table `tb_usuarios`
---
-ALTER TABLE `tb_usuarios`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tb_autores`
---
-ALTER TABLE `tb_autores`
-  MODIFY `id_autor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `tb_categorias`
---
-ALTER TABLE `tb_categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tb_editoras`
---
-ALTER TABLE `tb_editoras`
-  MODIFY `id_editora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `tb_livros`
---
-ALTER TABLE `tb_livros`
-  MODIFY `id_livro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `tb_livros_autores`
---
-ALTER TABLE `tb_livros_autores`
-  MODIFY `id_livro_autor` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tb_usuarios`
---
-ALTER TABLE `tb_usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
