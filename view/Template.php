@@ -3,7 +3,13 @@
 class Template {
 
     public static function header() {
-
+        session_start();
+            $_SESSION['usuario'] = filter_input(INPUT_POST, 'usuario');
+            $usuario = $_SESSION['usuario'];
+            if($usuario === NULL){
+                $usuario = 'Visitante';
+            }
+            
         echo "
             <!DOCTYPE html>
             <html lang='pt-br'>
@@ -37,8 +43,9 @@ class Template {
                 <link href='../assets/css/pe-icon-7-stroke.css' rel='stylesheet' />
                 ";
 
+          
         /*
-          session_start();
+         * 
           if ((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) {
           unset($_SESSION['login']);
           unset($_SESSION['senha']);
@@ -53,7 +60,13 @@ class Template {
             ";
     }
 
-    public static function sidebar() {
+    public static function sidebar($usuario = false) {
+        if($usuario === false){
+            $usuario = 'Visitante';
+        }
+        $grupoUsuario = ArreiosAuxController::getGrupoUsuario();
+        $permicoes = ArreiosAuxController::getSubGrupoUsuario($usuario);
+        
 
         echo "
         <!-- inicio do menu lateral -->
@@ -75,51 +88,38 @@ class Template {
                             BiblioteCasa
                         </a>
                     </div>
+                    <form action='../view/index.php' method='POST'>
+                    
+                    $usuario;
+                    
+                        <select class='form-control' name='usuario'>
+                            <ul class='nav'>";
+                            foreach ($grupoUsuario as $linha){
+                                echo "<option value= $linha >  $linha  </option>";
 
+                            }
+                echo "  </select>
+                        <input type='submit' name='enviar'> 
+                    </form>
+                        
                     <ul class='nav'>
-                        <li class='active'>
+                    <li class='active'>
                             <a href='../view/index.php'>
-                                <i class='pe-7s-notebook'></i>
                                 <p>Acervo</p>
                             </a>
-                        </li>
-                        <li>
-                            <a href='user.html'>
-                                <i class='pe-7s-users'></i>
-                                <p>Usuários</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href='../view/categoria.php'>
-                                <i class='pe-7s-note2'></i>
-                                <p>Categoria</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href='../view/autor.php'>
-                                <i class='pe-7s-news-paper'></i>
-                                <p>Autores</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href='icons.html'>
-                                <i class='pe-7s-science'></i>
-                                <p>Icons</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href='maps.html'>
-                                <i class='pe-7s-map-marker'></i>
-                                <p>Maps</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href='notifications.html'>
-                                <i class='pe-7s-bell'></i>
-                                <p>Notifications</p>
-                            </a>
-                        </li>
-                        <li class='active-pro'>
+                        </li>";
+            
+            if($permicoes != NULL){
+                foreach ($permicoes as $linhaPer){
+                    echo "<li>
+                                <a href='../view/$linhaPer.php'>
+                                    <p>$linhaPer</p>
+                                </a>
+                            </li>";
+                }
+            }
+            
+            echo "         <li class='active-pro'>
                             <a href='upgrade.html'>
                                 <i class='pe-7s-rocket'></i>
                                 <p>Logout</p>
@@ -286,7 +286,7 @@ class Template {
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src='../assets/js/demo.js'></script>
-
+<!--
 <script type='text/javascript'>
     $(document).ready(function(){
 
@@ -303,7 +303,7 @@ class Template {
 
     });
 </script>
-
+-->
 </html>
             ";
     }

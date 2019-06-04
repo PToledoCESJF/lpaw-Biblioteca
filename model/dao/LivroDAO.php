@@ -74,6 +74,19 @@ class LivroDAO implements iDao{
         }
     }
 
+    public static function BuscarPorIsbn($isbn) {
+        try {
+            $conexao = Conexao::conectar();
+            $queryBuscaPorIsbn = "SELECT * FROM tb_livros WHERE isbn = :isbn";
+            $stmt = $conexao->prepare($queryBuscaPorIsbn);
+            $stmt->bindValue(':isbn', $isbn);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+
 
     public static function tabelaDadosPorPagina($paginaAtual, $qtdRegistros){
         try {

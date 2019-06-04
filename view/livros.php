@@ -6,6 +6,8 @@ require_once '../config/Global.php';
         $livro = LivroController::carregarVazio();
         $categoriaLista = CategoriaController::listar();
         $editoraLista = EditoraController::listar();
+        $autorLista = AutorController::listar();
+        $livroAutorLista = LivroAutorController::listar();
         
         $method = filter_input(INPUT_POST, 'metodo');
         $idLivro = filter_input(INPUT_POST, 'id_livro');
@@ -19,7 +21,8 @@ require_once '../config/Global.php';
             $categoria = filter_input(INPUT_POST, 'categoria');
             $imagem = filter_input(INPUT_POST, 'imagem');
             $descricao = filter_input(INPUT_POST, 'descricao');
-
+            $autor = $_POST['autor'];
+    
             if($imagem == NULL || $imagem != $livro->getImagem()){ 
                 $imagensPermitidas = array("png", "jpeg", "jpg", "gif");
                 $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
@@ -33,7 +36,7 @@ require_once '../config/Global.php';
             }
 
             LivroController::carregar($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
-            $categoria, $editora, $descricao);
+            $categoria, $editora, $descricao, $autor);
             
         }elseif($method === 'editar'){
             $livro = LivroController::buscaPorId($idLivro);
@@ -131,11 +134,36 @@ require_once '../config/Global.php';
                             </div> 
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <label for="editora">Imagem</label>
                                         <input type="hidden" name="imagem" value="<?php echo $livro->getImagem() ?>">
                                         <input type="file" name="imagem" class="form-control btn-block">
                                     </div> 
+                                    <div class="col-md-6">
+                                        <label for="autor">Autor(es)</label>
+                                        <label name="autores" rows="3" cols="40" class="form-control"><?php 
+                                            foreach ($livroAutorLista as $linhaLivAut){
+                                                     if($linhaLivAut['livro'] == $livro->getIdLivro()){
+                                                        foreach ($autorLista as $linhaAut){
+                                                            if($linhaAut['id_autor'] == $linhaLivAut['autor']){
+                                                                echo $linhaAut['nome_autor'] . ', ';
+                                                            }
+                                                         }
+                                                    }
+                                                }
+                                            ?>
+                                        </label>
+                                        <select multiple name="autor[]" class="form-control">
+                                            <?php
+                                                foreach ($autorLista as $linhaAut){
+                                                    ?>
+                                                        <option value="<?php echo $linhaAut['id_autor'] ?>"><?php echo $linhaAut['nome_autor'] ?></option>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </select> 
+                                    </div> 
+                                    
                                 </div> 
                             </div> 
                             <div class="row">

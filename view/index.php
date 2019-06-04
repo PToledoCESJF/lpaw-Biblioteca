@@ -1,8 +1,13 @@
 <?php 
 
+session_start();
+
 require_once '../config/Global.php';
 
     try {
+        
+        $usuario = $_SESSION['usuario'];
+        
         $livroLista = LivroController::listar();
     //    $categoriaLista = CategoriaController::listar();
     //    $editoraLista = EditoraController::listar();
@@ -13,7 +18,7 @@ require_once '../config/Global.php';
     Template::header();
     // Para que os menus fiquem responsivos, é necessário que 
     // o sidebar() venha antes do navbar()
-    Template::sidebar();
+    Template::sidebar($usuario);
     Template::navbar();
 
 ?>

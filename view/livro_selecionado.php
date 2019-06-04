@@ -1,8 +1,12 @@
 <?php
-    
+session_start();
+
 require_once '../config/Global.php';
     
     try {
+        
+        $usuario = $_SESSION['usuario'];
+        
         $idLivro = filter_input(INPUT_GET, 'id_livro');
         $livro = LivroController::buscaPorId($idLivro);
         
@@ -48,7 +52,7 @@ require_once '../config/Global.php';
     Template::header();
     // Para que os menus fiquem responsivos, é necessário que 
     // o sidebar() venha antes do navbar()
-    Template::sidebar();
+    Template::sidebar($usuario);
     Template::navbar();
     ?>
 

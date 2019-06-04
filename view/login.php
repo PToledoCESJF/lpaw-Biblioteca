@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 
 /*
 
@@ -15,7 +16,6 @@ composer
 
 
 require_once '../config/Global.php';
-require_once './cabecalho.php';
 
 
 
@@ -32,7 +32,7 @@ require_once './cabecalho.php';
         <h2>Login</h2>
         
         <form action="../controller/sLogin.php" method="POST">
-            <input class="hidden" name="usuario_logado">
+            <input type="hidden" name="usuario_logado">
             <table class="table">
                 <tr>
                     <td>Email</td>
@@ -50,4 +50,3 @@ require_once './cabecalho.php';
         </div>
     </div>
 </body>
-<?php require_once './rodape.php' ?>

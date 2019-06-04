@@ -21,5 +21,25 @@ class ArreiosAuxController {
                         'RS'=>'Rio Grande do Sul', 'RO'=>'Rondônia', 'RR'=>'Roraima', 'SC'=>'Santa Catarina',
                         'SP'=>'São Paulo', 'SE'=>'Sergipe', 'TO'=>'Tocantins'];
     }
+    
+    public static function getGrupoUsuario(){
+        return [
+            '0' => 'Visitante',
+            '1' => 'Aluno', 
+            '2' => 'Professor', 
+            '3' => 'Gerente', 
+            '4' =>  'Bibliotecario', 
+            '5' => 'Atendente'];
+    }
+
+    public static function getSubGrupoUsuario($usuario){
+        if ($usuario == 'Gerente') {
+            return ['graficos', 'relatorios'];
+        }elseif ($usuario == 'Bibliotecario') {
+            return ['livros', 'exemplares', 'categorias', 'autores', 'editoras'];
+        }elseif ($usuario == 'Atendente') {
+            return ['emprestimos', 'reserva', 'usuarios'];
+        }
+    }
 
 }

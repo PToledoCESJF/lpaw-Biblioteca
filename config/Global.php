@@ -14,5 +14,7 @@ require_once 'Config.php';
             require_once '../controller/' . $nomeClasse . '.php';
         }elseif (file_exists('../config/' . $nomeClasse . '.php')){
             require_once '../config/' . $nomeClasse . '.php';
+        }elseif (file_exists('../view/' . $nomeClasse . '.php')){
+            require_once '../view/' . $nomeClasse . '.php';
         }
     }

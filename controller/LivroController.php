@@ -3,10 +3,10 @@
 class LivroController implements iController{
     
     public static function carregar($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
-            $categoria, $editora, $descricao){
+            $categoria, $editora, $descricao, $autor){
         $livro = new Livro($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
                 $categoria, $editora, $descricao);
-        self::salvar($livro);
+        self::salvarLivroAutor($livro, $autor);
     }
     
     public static function carregarVazio() {
@@ -23,6 +23,18 @@ class LivroController implements iController{
     public static function excluir($idLivro) {
         LivroDAO::excluir($idLivro);
         self::retornar();
+    }
+
+    public static function salvarLivroAutor($livro, $autor) {
+        try {
+            LivroDAO::salvar($livro);
+            $livroSalvo = LivroDAO::BuscarPorIsbn($livro->getIsbn());
+            
+            LivroAutorDAO::salvar(NULL, $livroSalvo['id_livro'], $autor);
+            //self::retornar();
+        } catch (PDOException $exc) {
+            Erro::trataErro($exc);
+        }
     }
 
     public static function salvar($livro) {
