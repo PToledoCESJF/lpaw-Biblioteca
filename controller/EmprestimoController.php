@@ -1,48 +1,60 @@
 <?php
 
-require_once '../config/Global.php';
-
-class ExemplarController implements iController{
-
-    public static function carregar($idExemplar, $livro, $tipoExemplar){
-        
-        $exemplar = new Exemplar($idExemplar, $livro, $tipoExemplar);
-        self::salvar($exemplar);
+class EmprestimoController {
+    
+    public static function carregarReserva($idEmprestimo, $exemplar, $usuario, $observacao){
+        $reserva = new Emprestimo($idEmprestimo, $exemplar, $usuario, $observacao);
+        self::reserva($reserva);
     }
-
-    public static function carregarVazio(){
-        return new Exemplar(NULL, NULL, NULL);
+    
+    public static function carregarVazio() {
+        return new Emprestimo(NULL, NULL, NULL, NULL, NULL, NULL);
     }
     
     public static function buscaPorId($id) {
-        $stmt = ExemplarDAO::BuscarPorId($id);
-        return new Exemplar($stmt['id_exemplar'], $stmt['livro'], $stmt['tipo_exemplar']);
+        $stmt = LivroDAO::BuscarPorId($id);
+        $stmt = EmprestimoDAO::BuscarPorId($id);
+        $reserva = new Emprestimo($stmt['id_emprestimo'], $stmt['exemplar'], $stmt['usuario'], 
+                $stmt['data_emprestimo'], $stmt['data_devolucao'], $stmt['observacao']);
+        return $reserva;
     }
 
-    public static function excluir($id) {
-        ExemplarDAO::excluir($id);
-        self::retornar();
+    public static function listar() {
+        return EmprestimoDAO::listar();
     }
-
-    public static function salvar($exemplar) {
+    
+    public static function retornar(){
+        header('Location: ../view/reservas.php');
+    }
+    
+    public static function reserva($reserva){
         try {
-            ExemplarDAO::salvar($exemplar);
+            EmprestimoDAO::reserva($reserva);
             self::retornar();
         } catch (PDOException $exc) {
             Erro::trataErro($exc);
         }
     }
+    
+    public static function emprestar($emprestimo){
 
-    public static function listar() {
-        return ExemplarDAO::listar();
     }
     
-    public static function retornar(){
-        header('Location: ../view/exemplares.php');
+    public static function renovarEmprestimo($emprestimo){
+
     }
-        
+
+    public static function devolver($emprestimo){
+
+    }
+    
+    
+    
+    
+    
     public static function tabelaPaginada(){
         try {
+            
             $endereco = $_SERVER['PHP_SELF'];
             define('QTD_REGISTROS', 4);
             define('RANGE_PAGINAS', 1);
@@ -51,9 +63,9 @@ class ExemplarController implements iController{
                 $paginaAtual = 1;
             }
 
-            $dados = ExemplarDAO::tabelaDadosPorPagina($paginaAtual, QTD_REGISTROS);
+            $dados = LivroDAO::tabelaDadosPorPagina($paginaAtual, QTD_REGISTROS);
             
-            $valor = ExemplarDAO::tabelaTotalDeDados();
+            $valor = LivroDAO::tabelaTotalDeDados();
             
             $primeiraPagina = 1;
             $ultimaPagina = ceil($valor->total_registros / QTD_REGISTROS);
@@ -69,35 +81,32 @@ class ExemplarController implements iController{
                     <div class='content table-responsive table-full-width'>
                             <table class='table table-hover table-striped'>
                                 <thead>
-                                    <th>id</th>
-                                    <th>Livro</th>
+                                    <th>Título</th>
                                     <th class='acao'>Editar</th>
                                     <th class='acao'>Excluir</th>
                                 </thead>
                                 <tbody>";
-                foreach($dados as $linha){
-                    $tituloLivro = self::tituloDoLivro($linha->livro);
-                    echo "
+                foreach($dados as $linha):
+                echo "
                     <tr>
-                        <td>$linha->id_exemplar </td>
-                        <td>$tituloLivro</td>
+                        <td>$linha->titulo</td>
                         <td>
-                            <form action='exemplares.php' method='POST'>
-                                <input type='hidden' name='id_exemplar' value='$linha->id_exemplar'>
+                            <form action='livros.php' method='POST'>
+                                <input type='hidden' name='id_livro' value='$linha->id_livro'>
                                 <input type='hidden' name='metodo' value='editar'>
                                 <button type='submit' class='btn btn-info active pe-7s-edit'></button>
                             </form>
                         </td>
 
                         <td>
-                            <form action='exemplares.php' method='POST'>
-                                <input type='hidden' name='id_exemplar' value='$linha->id_exemplar'>
+                            <form action='livros.php' method='POST'>
+                                <input type='hidden' name='id_livro' value='$linha->id_livro'>
                                 <input type='hidden' name='metodo' value='excluir'>
                                 <button type='submit' class='btn btn-danger active pe-7s-trash'></button>
                             </form>
                         </td>
                     </tr>";
-                }
+                endforeach;
                 echo "
                     </tbody>
                 </table>
@@ -121,21 +130,8 @@ class ExemplarController implements iController{
                 <p class='bg-danger'>Nenhum registro encontrado!</p>";
             }
             
-            
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
     }
-    
-    private static function tituloDoLivro($idLivro){
-        $livroLista = LivroController::listar();
-        foreach ($livroLista as $livro){
-            if($idLivro === $livro['id_livro']){
-                return $livro['titulo'];
-            }
-        }
-        
-    }
-    
-
 }

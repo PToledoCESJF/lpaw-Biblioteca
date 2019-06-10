@@ -1,61 +1,55 @@
 <?php
-session_start();
 
 require_once '../config/Global.php';
+
+Template::header();
     
     try {
         
-        $usuario = $_SESSION['usuario'];
-        
         $idLivro = filter_input(INPUT_GET, 'id_livro');
-        $livro = LivroController::buscaPorId($idLivro);
         
+        $livro = LivroController::buscaPorId($idLivro);
         $categoriaLista = CategoriaController::listar();
         $editoraLista = EditoraController::listar();
+        $livroAutorLista = LivroAutorController::listar();
+        $autorLista = AutorController::listar();
         
-        $method = filter_input(INPUT_POST, 'metodo');
+        $autores = [];
+        $nomesAutores = [];
         
-        if($method === 'salvar'){
-            $isbn = filter_input(INPUT_POST, 'isbn');
-            $edicao = filter_input(INPUT_POST, 'edicao');
-            $editora = filter_input(INPUT_POST, 'editora');
-            $ano = filter_input(INPUT_POST, 'ano');
-            $categoria = filter_input(INPUT_POST, 'categoria');
-            $imagem = filter_input(INPUT_POST, 'imagem');
-            $descricao = filter_input(INPUT_POST, 'descricao');
-
-            if($imagem == NULL || $imagem != $livro->getImagem()){ 
-                $imagensPermitidas = array("png", "jpeg", "jpg", "gif");
-                $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-                if(in_array($extensao, $imagensPermitidas)){
-                    $pasta = '../assets/img/books/';
-                    $temporario = $_FILES['imagem']['tmp_name'];
-                    $imagem = uniqid() . '.' . $extensao;
-
-                    move_uploaded_file($temporario, $pasta . $imagem);
-                }
+        foreach ($editoraLista as $ed){
+            if($livro->getEditora() == $ed['id_editora']){
+                $editora = $ed['nome_editora'];
             }
-
-            LivroController::carregar($idLivro, $titulo, $isbn, $edicao, $ano, $imagem, 
-            $categoria, $editora, $descricao);
-            
-        }elseif($method === 'editar'){
-            $livro = LivroController::buscaPorId($idLivro);
-        } elseif ($method === 'excluir') {
-            LivroController::excluir($idLivro);
-        } 
-
-
+        }
+        
+        foreach ($livroAutorLista as $la){
+            if($livro->getIdLivro() == $la['livro']){
+                array_push($autores, $la['autor']);
+            }
+        }
+        
+        foreach ($autores as $idAuts){
+            foreach ($autorLista as $al){
+                if($idAuts == $al['id_autor']){
+                    array_push($nomesAutores, $al['nome_autor']);
+                }
+                    
+            }
+        }
+        
+        
+    
     } catch (Exception $exc) {
         Erro::trataErro($exc);
     }
-    Template::header();
+    
     // Para que os menus fiquem responsivos, é necessário que 
     // o sidebar() venha antes do navbar()
-    Template::sidebar($usuario);
+    Template::sidebar();
     Template::navbar();
-    ?>
-
+    
+?>
 
 <div class="content">
     <div class="container-fluid">
@@ -78,9 +72,17 @@ require_once '../config/Global.php';
                                         <div class='card-body'>
                                             <h5 class='card-subtitle text-info'><strong><?php echo $livro->getTitulo()?></strong></h5>
                                             <p class='card-text'><strong>Edição:</strong> <?php echo $livro->getEdicao()?></p>
-                                            <p class='card-text'><strong>Editora:</strong> <?php echo $livro->getEditora()?></p>
+                                            
+                                            <p class='card-text'><strong>Editora:</strong> <?php echo $editora ?></p>
                                             <p class='card-text'><strong>Ano:</strong> <?php echo $livro->getAno()?></p>
-                                            <p class='card-text'><strong>Autor(es):</strong> </p>
+                                            <p class='card-text'><strong>Autor(es):</strong>
+                                                <?php foreach ($nomesAutores as $nomes){
+                                                    echo $nomes . ', ';
+                                                }
+                                                                                                        
+                                                                                                                ?> </p>
+                                                
+
                                         </div>
                                     </div>
                                 </div>
@@ -97,26 +99,28 @@ require_once '../config/Global.php';
                         <div class='col-lg-3'>
                             <div class='card'>
                                 <div class='card-body'>
-                                    <div class='card-title'>
-                                        <h5 class="text-muted"><strong>Reservas</strong></h5>
-                                    </div>
-                                    <div class="content">
-                                        <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+                                    <form action="livro_reserva.php" method="POST">
+                                        
+                                        <div class='card-title'>
+                                            <h5 class="text-muted"><strong>Reservas</strong></h5>
+                                        </div>
+                                        <div class="content">
+                                            <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
 
-                                        <div class="footer">
-                                            <div class="legend">
-                                                <i class="fa fa-circle text-info"></i> Março
-                                                <i class="fa fa-circle text-danger"></i> Abril
-                                                <i class="fa fa-circle text-warning"></i> Maio
-                                            </div>
-                                            <hr>
-                                            <div class="stats">
-                                                <i class="fa fa-clock-o"></i> Dados dos últimos 3 meses
+                                            <div class="footer">
+                                                <div class="legend">
+                                                    <i class="fa fa-circle text-info"></i> Março
+                                                    <i class="fa fa-circle text-danger"></i> Abril
+                                                    <i class="fa fa-circle text-warning"></i> Maio
+                                                </div>
+                                                <hr>
+                                                <div class="stats">
+                                                    <i class="fa fa-clock-o"></i> Dados dos últimos 3 meses
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <input type="submit" value="Reservar" name="reservar" />
+                                        <input type="submit" class="btn btn-primary btn-block active" value="reservar" >
+                                    </form>
                                 </div>
                             </div>
                         </div>

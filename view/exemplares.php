@@ -2,9 +2,12 @@
     
 require_once '../config/Global.php';
     
+Template::header();
+
     try {
         $exemplar = ExemplarController::carregarVazio();
         $livroLista = LivroController::listar();
+        $tipoExemplarLista = ArreiosAuxController::getTipoExemplar();
         
         $method = filter_input(INPUT_POST, 'metodo');
         $idExemplar = filter_input(INPUT_POST, 'id_exemplar');
@@ -13,16 +16,20 @@ require_once '../config/Global.php';
             $livro = filter_input(INPUT_POST, 'livro');
             $tipoExemplar = filter_input(INPUT_POST, 'tipo_exemplar');
             
-             if($idExemplar == NULL){ 
-                $tiposPermitidos = array("pdf", "doc", "docx", "odt", "txt");
-                $extensao = pathinfo($_FILES['upload']['name'], PATHINFO_EXTENSION);
-                if(in_array($extensao, $tiposPermitidos)){
-                    $pasta = '../assets/books/';
-                    $temporario = $_FILES['upload']['tmp_name'];
-                    $idExemplar = uniqid() . '.' . $extensao;
+             if($idExemplar == NULL){
+                 if($tipoExemplar == 3){
+                    $tiposPermitidos = array("pdf", "doc", "docx", "odt", "txt");
+                    $extensao = pathinfo($_FILES['upload']['name'], PATHINFO_EXTENSION);
+                    if(in_array($extensao, $tiposPermitidos)){
+                        $pasta = '../assets/books/';
+                        $temporario = $_FILES['upload']['tmp_name'];
+                        $idExemplar = uniqid() . '.' . $extensao;
 
-                    move_uploaded_file($temporario, $pasta . $idExemplar);
-                }
+                        move_uploaded_file($temporario, $pasta . $idExemplar);
+                    }
+                 } else {
+                    $idExemplar = uniqid();
+                 }
             }
             
             ExemplarController::carregar($idExemplar, $livro, $tipoExemplar);
@@ -36,7 +43,6 @@ require_once '../config/Global.php';
     } catch (Exception $exc) {
         Erro::trataErro($exc);
     }
-    Template::header();
     // Para que os menus fiquem responsivos, é necessário que 
     // o sidebar() venha antes do navbar()
     Template::sidebar();
@@ -54,7 +60,7 @@ require_once '../config/Global.php';
                         <h3 class="title">Exemplar</h3>
                     </div>
                     <div class="content">
-                        <form action="exemplar.php" method="post" enctype="multipart/form-data">
+                        <form action="exemplares.php" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="metodo" value="salvar">
                             <input type="hidden" name="id_exemplar" value="<?php echo $exemplar->getIdExemplar() ?>">
                             <div class="row">
@@ -80,9 +86,20 @@ require_once '../config/Global.php';
                                         </div>
                                             <div class="col-md-6">
                                                 <label for="tipo_exemplar">Tipo de Exemplar</label>
-                                                <input type="text" name="tipo_exemplar" 
-                                                       value="<?php echo $exemplar->getTipoExemplar() ?>" 
-                                                       class="form-control" required placeholder="Tipo de Exemplar">
+                                                <select class="form-control" name="tipo_exemplar">
+                                                    <?php
+                                                        $selectedTipo = '';
+                                                        foreach ($tipoExemplarLista as $indice => $tipo){
+                                                            if($indice == $exemplar->getTipoExemplar()){
+                                                                $selectedTipo = 'selected';
+                                                            }
+                                                        ?>
+                                                            <option <?php echo $selectedTipo ?> value="<?php echo $indice ?>"><?php echo $tipo ?></option>
+                                                        <?php
+                                                            $selectedTipo = '';
+                                                        }
+                                                        ?>
+                                                </select> 
                                             </div>      
                                     </div>
                                 </div>                

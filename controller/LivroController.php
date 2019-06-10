@@ -83,9 +83,7 @@ class LivroController implements iController{
                     <div class='content table-responsive table-full-width'>
                             <table class='table table-hover table-striped'>
                                 <thead>
-                                    <th>id</th>
                                     <th>Título</th>
-                                    <th>Categoria</th>
                                     <th class='acao'>Editar</th>
                                     <th class='acao'>Excluir</th>
                                 </thead>
@@ -93,11 +91,9 @@ class LivroController implements iController{
                 foreach($dados as $linha):
                 echo "
                     <tr>
-                        <td>$linha->id_livro </td>
                         <td>$linha->titulo</td>
-                        <td>$linha->categoria</td>
                         <td>
-                            <form action='livro.php' method='POST'>
+                            <form action='livros.php' method='POST'>
                                 <input type='hidden' name='id_livro' value='$linha->id_livro'>
                                 <input type='hidden' name='metodo' value='editar'>
                                 <button type='submit' class='btn btn-info active pe-7s-edit'></button>
@@ -105,7 +101,7 @@ class LivroController implements iController{
                         </td>
 
                         <td>
-                            <form action='livro.php' method='POST'>
+                            <form action='livros.php' method='POST'>
                                 <input type='hidden' name='id_livro' value='$linha->id_livro'>
                                 <input type='hidden' name='metodo' value='excluir'>
                                 <button type='submit' class='btn btn-danger active pe-7s-trash'></button>

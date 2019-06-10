@@ -3,12 +3,13 @@
 class Template {
 
     public static function header() {
+        
         session_start();
-            $_SESSION['usuario'] = filter_input(INPUT_POST, 'usuario');
-            $usuario = $_SESSION['usuario'];
-            if($usuario === NULL){
-                $usuario = 'Visitante';
-            }
+        
+        if(!isset($_SESSION['usuario_logado'])){
+            $_SESSION['usuario_nome'] = 'Visitante';
+            $_SESSION['usuario_grupo'] = 0;
+        }
             
         echo "
             <!DOCTYPE html>
@@ -60,13 +61,9 @@ class Template {
             ";
     }
 
-    public static function sidebar($usuario = false) {
-        if($usuario === false){
-            $usuario = 'Visitante';
-        }
-        $grupoUsuario = ArreiosAuxController::getGrupoUsuario();
-        $permicoes = ArreiosAuxController::getSubGrupoUsuario($usuario);
-        
+    public static function sidebar() {
+
+        $permicoes = ArreiosAuxController::getSubGrupoUsuario($_SESSION['usuario_grupo']);
 
         echo "
         <!-- inicio do menu lateral -->
@@ -87,21 +84,7 @@ class Template {
                         <a href='../view/index.php' class='simple-text'>
                             BiblioteCasa
                         </a>
-                    </div>
-                    <form action='../view/index.php' method='POST'>
-                    
-                    $usuario;
-                    
-                        <select class='form-control' name='usuario'>
-                            <ul class='nav'>";
-                            foreach ($grupoUsuario as $linha){
-                                echo "<option value= $linha >  $linha  </option>";
-
-                            }
-                echo "  </select>
-                        <input type='submit' name='enviar'> 
-                    </form>
-                        
+                    </div>                   
                     <ul class='nav'>
                     <li class='active'>
                             <a href='../view/index.php'>
@@ -186,22 +169,22 @@ class Template {
 
                     <ul class='nav navbar-nav navbar-right'>
                         <li>
-                           <a href=''>
-                               <p>Account</p>
+                            <a href='../view/login.php'>
+                               <p>Entrar</p>
                             </a>
                         </li>
                         <li class='dropdown'>
                               <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-                                <p>
-                                    Dropdown
+                                <p>"; 
+                                 echo $_SESSION['usuario_nome'] . "
                                     <b class='caret'></b>
                                 </p>
 
                               </a>
                               <ul class='dropdown-menu'>
-                                <li><a href='../view/usuario.php'>Usuários</a></li>
-                                <li><a href='../view/livro.php'>Livros</a></li>
-                                <li><a href='../view/exemplar.php'>Exemplar</a></li>
+                                <li><a href='../view/usuario.php'>Meus Dados</a></li>
+                                <li><a href='../view/livro.php'>Empréstimos</a></li>
+                                <li><a href='../view/exemplar.php'>Lista de Desejos</a></li>
                                 <li><a href='../view/categoria.php'>Categorias</a></li>
                                 <li><a href='../view/editora.php'>Editoras</a></li>
                                 <li><a href='../view/autor.php'>Autores</a></li>
@@ -210,8 +193,8 @@ class Template {
                               </ul>
                         </li>
                         <li>
-                            <a href='#'>
-                                <p>Log out</p>
+                            <a href='#?cl=y'>
+                                <p>Sair</p>
                             </a>
                         </li>
                         <li class='separator hidden-lg'></li>
@@ -222,6 +205,7 @@ class Template {
 
 <!-- fim do menu superior -->
             ";
+
     }
 
     public static function footer() {

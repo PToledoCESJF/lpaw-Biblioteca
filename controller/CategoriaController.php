@@ -70,7 +70,6 @@ class CategoriaController implements iController {
                     <div class='content table-responsive table-full-width'>
                             <table class='table table-hover table-striped'>
                                 <thead>
-                                    <th>id</th>
                                     <th>Categoria</th>
                                     <th>Assunto</th>
                                     <th class='acao'>Editar</th>
@@ -80,11 +79,10 @@ class CategoriaController implements iController {
                 foreach($dados as $linha):
                 echo "
                     <tr>
-                        <td>$linha->id_categoria </td>
                         <td>$linha->nome_categoria</td>
                         <td>$linha->assunto</td>
                         <td>
-                            <form action='categoria.php' method='POST'>
+                            <form action='categorias.php' method='POST'>
                                 <input type='hidden' name='id_categoria' value='$linha->id_categoria'>
                                 <input type='hidden' name='metodo' value='editar'>
                                 <button type='submit' class='btn btn-info active pe-7s-edit'></button>
@@ -92,7 +90,7 @@ class CategoriaController implements iController {
                         </td>
 
                         <td>
-                            <form action='categoria.php' method='POST'>
+                            <form action='categorias.php' method='POST'>
                                 <input type='hidden' name='id_categoria' value='$linha->id_categoria'>
                                 <input type='hidden' name='metodo' value='excluir'>
                                 <button type='submit' class='btn btn-danger active pe-7s-trash'></button>

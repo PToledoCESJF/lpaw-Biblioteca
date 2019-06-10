@@ -1,31 +1,43 @@
 <?php
 
 class Emprestimo {
+    private $idEmprestimo;
     private $exemplar;
     private $usuario;
     private $dataEmprestimo;
+    private $dataDevolucao;
     private $observacao;
     
-    function __construct($exemplar, $usuario, $dataEmprestimo, $observacao) {
+    public function __construct($idEmprestimo, $exemplar, $usuario, $dataEmprestimo, $dataDevolucao, $observacao) {
+        $this->idEmprestimo = $idEmprestimo;
         $this->exemplar = $exemplar;
         $this->usuario = $usuario;
         $this->dataEmprestimo = $dataEmprestimo;
+        $this->dataDevolucao = $dataDevolucao;
         $this->observacao = $observacao;
     }
     
-    function getExemplar() {
+    function getIdEmprestimo() {
+        return $this->idEmprestimo;
+    }
+
+    public function getExemplar() {
         return $this->exemplar;
     }
 
-    function getUsuario() {
+    public function getUsuario() {
         return $this->usuario;
     }
 
-    function getDataEmprestimo() {
+    public function getDataEmprestimo() {
         return $this->dataEmprestimo;
     }
 
-    function getObservacao() {
+    function getDataDevolucao() {
+        return $this->dataDevolucao;
+    }
+
+    public function getObservacao() {
         return $this->observacao;
     }
 

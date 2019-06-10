@@ -8,7 +8,7 @@ class ArreiosAuxController {
     }
     
     public static function getTipoExemplar() {
-        return $tipos = ['1' => 'Circular', '2' => 'Não Circular'];
+        return $tipos = ['1' => 'Circular', '2' => 'Não Circular', '3' => 'Acervo Digital'];
     }
 
 
@@ -28,16 +28,17 @@ class ArreiosAuxController {
             '1' => 'Aluno', 
             '2' => 'Professor', 
             '3' => 'Gerente', 
-            '4' =>  'Bibliotecario', 
+            '4' => 'Bibliotecario', 
             '5' => 'Atendente'];
     }
 
     public static function getSubGrupoUsuario($usuario){
-        if ($usuario == 'Gerente') {
-            return ['graficos', 'relatorios'];
-        }elseif ($usuario == 'Bibliotecario') {
+        if ($usuario == 3) {
+            return ['graficos', 'relatorios', 'emprestimos', 'reservas', 'usuarios', 
+                'livros', 'exemplares', 'categorias', 'autores', 'editoras'];
+        }elseif ($usuario == 4) {
             return ['livros', 'exemplares', 'categorias', 'autores', 'editoras'];
-        }elseif ($usuario == 'Atendente') {
+        }elseif ($usuario == 5) {
             return ['emprestimos', 'reserva', 'usuarios'];
         }
     }

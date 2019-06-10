@@ -9,7 +9,7 @@ class LivroDAO implements iDao{
             $conexao = Conexao::conectar();
             
             if($livro->getIdLivro() != NULL){
-                $stmt = $conexao->prepare("UPDATE tb_livros SET  titulo = :titulo, isbn = :isbn, "
+                $stmt = $conexao->prepare("UPDATE tb_livros SET titulo = :titulo, isbn = :isbn, "
                         . "edicao = :edicao, ano = :ano, categoria = :categoria, "
                         . "editora = :editora, imagem = :imagem, descricao = :descricao "
                         . "WHERE id_livro = :id_livro");

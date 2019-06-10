@@ -39,7 +39,7 @@ require_once '../config/Global.php';
                         <h3 class="title">Autor</h3>
                     </div>
                     <div class="content">
-                        <form action="autor.php" method="post">
+                        <form action="autores.php" method="post">
                             <input type="hidden" name="metodo" value="salvar">
                             <input type="hidden" name="id_autor" value="<?php echo $autor->getIdAutor() ?>">
                             <div class="row">

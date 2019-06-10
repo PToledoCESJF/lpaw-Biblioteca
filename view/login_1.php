@@ -25,18 +25,12 @@ require_once '../config/Global.php';
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <img class='card-img-top'
-                         src="../assets/img/bibliotecabig.jpg" 
-                         style="height: 1%; width: 100%" />
-                </div>
-                <div class="card" style="padding: 2%;">
-                    
+            <div class="col-md-12" style="padding: 2%;">
+                <div class="card">
                     <div class="col-md-4">
                         <div>
                             <img class='card-img-top img-responsive'
-                                 src="../assets/img/pilha-de-livros.jpg" 
+                                 src="../assets/img/sidebar-6.png" 
                                  style="width: 100%; height: 100%;" />
                         </div>
                     </div>

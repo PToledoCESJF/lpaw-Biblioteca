@@ -2,6 +2,8 @@
     
 require_once '../config/Global.php';
     
+Template::header();
+
     try {
         $livro = LivroController::carregarVazio();
         $categoriaLista = CategoriaController::listar();
@@ -48,7 +50,6 @@ require_once '../config/Global.php';
     } catch (Exception $exc) {
         Erro::trataErro($exc);
     }
-    Template::header();
     // Para que os menus fiquem responsivos, é necessário que 
     // o sidebar() venha antes do navbar()
     Template::sidebar();
@@ -66,7 +67,7 @@ require_once '../config/Global.php';
                         <h3 class="title">Livro</h3>
                     </div>
                     <div class="content">
-                        <form action="livro.php" method="POST" enctype="multipart/form-data">
+                        <form action="livros.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="metodo" value="salvar">
                             <input type="hidden" name="id_livro" value="<?php echo $livro->getIdLivro() ?>">
                             <div class="row">

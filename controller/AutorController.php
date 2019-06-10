@@ -35,7 +35,7 @@ class AutorController {
     }
     
     public static function retornar(){
-        header('Location: ../view/autor.php');
+        header('Location: ../view/autores.php');
     }
     
     public static function tabelaPaginada(){
@@ -67,7 +67,6 @@ class AutorController {
                     <div class='content table-responsive table-full-width'>
                             <table class='table table-hover table-striped'>
                                 <thead>
-                                    <th>id</th>
                                     <th>Autor</th>
                                     <th class='acao'>Editar</th>
                                     <th class='acao'>Excluir</th>
@@ -76,10 +75,9 @@ class AutorController {
                 foreach($dados as $linha):
                 echo "
                     <tr>
-                        <td>$linha->id_autor </td>
                         <td>$linha->nome_autor</td>
                         <td>
-                            <form action='autor.php' method='POST'>
+                            <form action='autores.php' method='POST'>
                                 <input type='hidden' name='id_autor' value='$linha->id_autor'>
                                 <input type='hidden' name='metodo' value='editar'>
                                 <button type='submit' class='btn btn-info active pe-7s-edit'></button>
@@ -87,7 +85,7 @@ class AutorController {
                         </td>
 
                         <td>
-                            <form action='autor.php' method='POST'>
+                            <form action='autores.php' method='POST'>
                                 <input type='hidden' name='id_autor' value='$linha->id_autor'>
                                 <input type='hidden' name='metodo' value='excluir'>
                                 <button type='submit' class='btn btn-danger active pe-7s-trash'></button>
