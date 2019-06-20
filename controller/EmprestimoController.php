@@ -2,20 +2,34 @@
 
 class EmprestimoController {
     
-    public static function carregarReserva($idEmprestimo, $exemplar, $usuario, $observacao){
-        $reserva = new Emprestimo($idEmprestimo, $exemplar, $usuario, $observacao);
-        self::reserva($reserva);
+    public static function carregarReserva($reserva, $usuario){
+        try {
+            if(count($reserva) >  0){
+                if(EmprestimoDAO::salvarReserva($reserva, $usuario)){
+
+                    foreach ($_SESSION['reserva_livro'] as $indice => $livro){
+                        $result = array_search($livro, $_SESSION['reserva_livro']);
+                        unset($_SESSION['reserva_livro'][$result]);
+                    }
+                }
+            }
+            
+            self::retornar('salvar');
+            
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
     }
     
     public static function carregarVazio() {
-        return new Emprestimo(NULL, NULL, NULL, NULL, NULL, NULL);
+        return new Emprestimo(NULL, NULL, NULL, NULL);
     }
     
     public static function buscaPorId($id) {
         $stmt = LivroDAO::BuscarPorId($id);
         $stmt = EmprestimoDAO::BuscarPorId($id);
-        $reserva = new Emprestimo($stmt['id_emprestimo'], $stmt['exemplar'], $stmt['usuario'], 
-                $stmt['data_emprestimo'], $stmt['data_devolucao'], $stmt['observacao']);
+        $reserva = new Emprestimo($stmt['id_emprestimo'], $stmt['exemplar'], 
+                $stmt['usuario'], $stmt['observacao']);
         return $reserva;
     }
 
@@ -23,21 +37,62 @@ class EmprestimoController {
         return EmprestimoDAO::listar();
     }
     
-    public static function retornar(){
-        header('Location: ../view/reservas.php');
+    public static function listarReservas($idUsuario){
+        return EmprestimoDAO::listarReservas($idUsuario);
+    }
+
+    private static function retornar($origem){
+        if ($origem == 'salvar'){
+            header('Location: ../view/reservas.php?w3wb=ds1fa5d4f53');            
+        }elseif ($origem == 'excluirSemSalvar') {
+            header('Location: ../view/livro_reserva.php');
+        }elseif ($origem == 'excluirRes') {
+            header('Location: ../view/reservas.php?w3wb=ed12f8h423h');
+        }elseif ($origem == 'reservado') {
+            header('Location: ../view/reservas.php?w3wb=ed12f8h423h');            
+        }
     }
     
-    public static function reserva($reserva){
+    // Método que excluir uma reserva antes de ser salva no banco 
+    public static function excluirReservaSemSalvar($idLivro){
+        if(isset($idLivro)){
+            $result = array_search($idLivro, $_SESSION['reserva_livro']);
+            unset($_SESSION['reserva_livro'][$result]);
+        
+            self::retornar('excluirSemSalvar');
+        }
+    }
+        
+    // Método que excluir uma reserva salva no banco porém antes de se tornar empréstimo
+    public static function excluirReserva($idEmpExemp){
         try {
-            EmprestimoDAO::reserva($reserva);
-            self::retornar();
-        } catch (PDOException $exc) {
+            EmprestimoDAO::excluirReserva($idEmpExemp);
+            self::retornar('excluirRes');
+        } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
     }
     
-    public static function emprestar($emprestimo){
+    public static function listarExemplarLivro(){
+        try {
+            return EmprestimoDAO::listarExemplarLivro();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
 
+    public static function emprestar($emprestimoLista){
+        try {
+            
+            foreach ($emprestimoLista as $idEmprestimo => $idExemplar){
+                EmprestimoDAO::emprestar($idEmprestimo, $idExemplar);
+            }
+            
+            self::retornar('reservado');
+            
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
     }
     
     public static function renovarEmprestimo($emprestimo){
@@ -47,11 +102,7 @@ class EmprestimoController {
     public static function devolver($emprestimo){
 
     }
-    
-    
-    
-    
-    
+     
     public static function tabelaPaginada(){
         try {
             

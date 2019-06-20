@@ -39,7 +39,7 @@ class ArreiosAuxController {
         }elseif ($usuario == 4) {
             return ['livros', 'exemplares', 'categorias', 'autores', 'editoras'];
         }elseif ($usuario == 5) {
-            return ['emprestimos', 'reserva', 'usuarios'];
+            return ['emprestimos', 'reservas', 'usuarios'];
         }
     }
 

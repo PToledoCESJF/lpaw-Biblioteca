@@ -8,6 +8,7 @@ class Template {
         
         if(!isset($_SESSION['usuario_logado'])){
             $_SESSION['usuario_nome'] = 'Visitante';
+            $_SESSION['usuario_id'] = 0;
             $_SESSION['usuario_grupo'] = 0;
         }
             
@@ -42,20 +43,6 @@ class Template {
                 <link href='../assets/css/font-awesome.min.css' rel='stylesheet'>
                 <link href='../assets/css/family.Roboto.400.700.300.css' rel='stylesheet' type='text/css'>
                 <link href='../assets/css/pe-icon-7-stroke.css' rel='stylesheet' />
-                ";
-
-          
-        /*
-         * 
-          if ((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) {
-          unset($_SESSION['login']);
-          unset($_SESSION['senha']);
-          header('location:login.php');
-          }
-          $logado = $_SESSION['login'];
-         */
-
-        echo "
             </head>
             <body>
             ";
@@ -86,25 +73,24 @@ class Template {
                         </a>
                     </div>                   
                     <ul class='nav'>
-                    <li class='active'>
+                        <li class='active'>
                             <a href='../view/index.php'>
                                 <p>Acervo</p>
                             </a>
                         </li>";
-            
-            if($permicoes != NULL){
-                foreach ($permicoes as $linhaPer){
-                    echo "<li>
-                                <a href='../view/$linhaPer.php'>
-                                    <p>$linhaPer</p>
-                                </a>
-                            </li>";
-                }
-            }
-            
-            echo "         <li class='active-pro'>
-                            <a href='upgrade.html'>
-                                <i class='pe-7s-rocket'></i>
+                        if($permicoes != NULL){
+                            foreach ($permicoes as $linhaPer){
+                            echo "<li>
+                                    <a href='../view/$linhaPer.php'>
+                                        <p>$linhaPer</p>
+                                    </a>
+                                </li>";
+                            }
+                        }
+
+                        echo " 
+                        <li class='active-pro'>
+                            <a href='../view/logout.php?metodo=logout'>
                                 <p>Logout</p>
                             </a>
                         </li>
@@ -170,7 +156,7 @@ class Template {
                     <ul class='nav navbar-nav navbar-right'>
                         <li>
                             <a href='../view/login.php'>
-                               <p>Entrar</p>
+                               <p>Login</p>
                             </a>
                         </li>
                         <li class='dropdown'>
@@ -183,18 +169,15 @@ class Template {
                               </a>
                               <ul class='dropdown-menu'>
                                 <li><a href='../view/usuario.php'>Meus Dados</a></li>
-                                <li><a href='../view/livro.php'>Empréstimos</a></li>
+                                <li><a href='../view/reservas.php?w3wb=ds1fa5d4f53'>Meus Empréstimos</a></li>
                                 <li><a href='../view/exemplar.php'>Lista de Desejos</a></li>
-                                <li><a href='../view/categoria.php'>Categorias</a></li>
-                                <li><a href='../view/editora.php'>Editoras</a></li>
-                                <li><a href='../view/autor.php'>Autores</a></li>
                                 <li class='divider'></li>
                                 <li><a href='#'>Separated link</a></li>
                               </ul>
                         </li>
                         <li>
-                            <a href='#?cl=y'>
-                                <p>Sair</p>
+                            <a href='../view/logout.php?metodo=logout'>
+                                <p>Logout</p>
                             </a>
                         </li>
                         <li class='separator hidden-lg'></li>
@@ -205,6 +188,8 @@ class Template {
 
 <!-- fim do menu superior -->
             ";
+ 
+        echo 'Mensagens vão aki!! ';
 
     }
 

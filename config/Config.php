@@ -8,4 +8,5 @@
     define('DB_USERNAME', 'biblioteca');
     define('DB_PASSWORD', 'senha');
 
+    define('PRAZO', 7);
 

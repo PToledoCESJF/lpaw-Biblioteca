@@ -6,13 +6,13 @@ require_once '../config/Global.php';
         $usuarioLista = UsuarioController::listar();
         
         $method = filter_input(INPUT_POST, 'metodo');
+        $origem = filter_input(INPUT_POST, 'origem');
         $email = filter_input(INPUT_POST, 'email');
         $senha = filter_input(INPUT_POST, 'senha');
         
-        if(UsuarioController::consultaUsuario($email, $senha)){
-            
+        if($method == 'acessar'){
+            UsuarioController::consultaUsuario($email, $senha, $origem);
         }
-
     } catch (Exception $exc) {
         Erro::trataErro($exc);
     }
@@ -25,37 +25,33 @@ require_once '../config/Global.php';
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <img class='card-img-top'
-                         src="../assets/img/bibliotecabig.jpg" 
-                         style="height: 1%; width: 100%" />
-                </div>
-                <div class="card" style="padding: 2%;">
+            <div class="col-md-12"  style="padding: 4%;">
+                
+                <div class="card">
                     
-                    <div class="col-md-4">
+                    <div class="col-md-6 col-md-offset-1" style="width: 40%; height: 40%; padding: 3%">
                         <div>
                             <img class='card-img-top img-responsive'
-                                 src="../assets/img/pilha-de-livros.jpg" 
+                                 src="../assets/img/logo_livro.jpg" 
                                  style="width: 100%; height: 100%;" />
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-5" style="padding-top: 10%">
+                        <div class="col-md-4 col-md-offset-1" style="padding-top: 15%">
                             
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <h5 class="title"><strong>Acessar conta</strong></h5>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     ou | <a href='../view/criar_conta.php' class='simple-text'>Criar conta</a>
                                 </div>
                             </div>
 
                             <div class="content">
-                                <form action="login.php" method="post">
-                                    <input type="hidden" name="metodo" value="acessar">
+                                <form action="login.php" method="POST">
+                                    <input type="hidden" name="origem" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -64,7 +60,7 @@ require_once '../config/Global.php';
                                             </div>                
                                             <div class="form-group">
                                                 <input type="password" name="senha" 
-                                                       class="form-control" autofocus required placeholder="Senha">
+                                                       class="form-control" required placeholder="Senha">
                                             </div>                
                                         </div>                
                                     </div>
@@ -77,7 +73,8 @@ require_once '../config/Global.php';
                                                     </div>                
                                                     <div class="form-group">
                                                         <div class="col-md-6">
-                                                            <input type="submit" class="btn btn-primary btn-block active" value="Acessar">
+                                                            <input type="submit" class="btn btn-primary btn-block active" 
+                                                                   name="metodo" value="acessar">
                                                         </div>                
                                                     </div> 
                                                 </div>                

@@ -6,9 +6,19 @@ Template::header();
     
     try {
         
-        $idLivro = filter_input(INPUT_GET, 'id_livro');
+        $method = filter_input(INPUT_POST, 'metodo');
         
-        $livro = LivroController::buscaPorId($idLivro);
+        if($method == 'reservar'){
+            if($_SESSION['usuario_grupo'] == 0){
+                header('Location: ../view/login.php');           
+            } else {
+                header('Location: ../view/livro_reserva.php');
+            }
+        }
+        
+
+        
+        $livro = LivroController::buscaPorId($_SESSION['livro_id']);
         $categoriaLista = CategoriaController::listar();
         $editoraLista = EditoraController::listar();
         $livroAutorLista = LivroAutorController::listar();
@@ -37,7 +47,6 @@ Template::header();
                     
             }
         }
-        
         
     
     } catch (Exception $exc) {
@@ -71,18 +80,15 @@ Template::header();
                                     <div class='card'>
                                         <div class='card-body'>
                                             <h5 class='card-subtitle text-info'><strong><?php echo $livro->getTitulo()?></strong></h5>
-                                            <p class='card-text'><strong>Edição:</strong> <?php echo $livro->getEdicao()?></p>
-                                            
+                                            <p class='card-text'><strong>Edição:</strong> <?php echo $livro->getEdicao()?></p>                                            
                                             <p class='card-text'><strong>Editora:</strong> <?php echo $editora ?></p>
                                             <p class='card-text'><strong>Ano:</strong> <?php echo $livro->getAno()?></p>
                                             <p class='card-text'><strong>Autor(es):</strong>
                                                 <?php foreach ($nomesAutores as $nomes){
                                                     echo $nomes . ', ';
                                                 }
-                                                                                                        
-                                                                                                                ?> </p>
-                                                
-
+                                                ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -99,8 +105,7 @@ Template::header();
                         <div class='col-lg-3'>
                             <div class='card'>
                                 <div class='card-body'>
-                                    <form action="livro_reserva.php" method="POST">
-                                        
+                                    <form action="livro_detalhe.php" method="POST">
                                         <div class='card-title'>
                                             <h5 class="text-muted"><strong>Reservas</strong></h5>
                                         </div>
@@ -119,7 +124,8 @@ Template::header();
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary btn-block active" value="reservar" >
+                                        <input type="submit" class="btn btn-primary btn-block active" 
+                                                name="metodo"  value="reservar">
                                     </form>
                                 </div>
                             </div>

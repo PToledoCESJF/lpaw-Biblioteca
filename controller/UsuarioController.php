@@ -2,21 +2,27 @@
 
 require_once '../config/Global.php';
 
-class UsuarioController implements iController{
+class UsuarioController{
     
-    public static function consultaUsuario($email, $senha){
+    public static function consultaUsuario($email, $senha, $origem){
         $senhaMd5 = md5($senha);
         $usuarioLista = self::listar();
         
         foreach ($usuarioLista as $usuario){
             if($usuario['email'] === $email && $usuario['senha'] === $senhaMd5){
-                session_destroy();
                 session_start();
                 $_SESSION['usuario_id'] = $usuario['id_usuario'];
                 $_SESSION['usuario_nome'] = $usuario['nome_usuario'];
                 $_SESSION['usuario_grupo'] = $usuario['grupo'];
+                $_SESSION['usuario_pesquisa'] = "Selecione um Usuário";
+                $_SESSION['usuario_pesquisa_id'] = 0;
                 $_SESSION['usuario_logado'] = TRUE;
-                return TRUE;
+                $_SESSION['reserva_livro'] = array();
+                $_SESSION['emprestimo_idEmpExemp'] = array();
+                $_SESSION['emprestimo_exemplar'] = array();
+                self::retornar($origem);
+            } else {
+                echo 'DEU RUIM!!!!';
             }
         }
     }
@@ -54,21 +60,28 @@ class UsuarioController implements iController{
 
     public static function excluir($id) {
         UsuarioDAO::excluir($id);
-        self::retornar();
+        
+        self::retornar('usuarios.php');
     }
 
     public static function listar() {
         return UsuarioDAO::listar();
     }
 
-    public static function retornar() {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    public static function retornar($origem) {
+        if(stristr($origem, 'livro_detalhe')){
+            header('Location: ../view/livro_reserva.php');
+        } elseif(stristr ($origem, 'usuarios.php')) {
+            header('Location:../view/usuarios.php');
+        } else {
+            header('Location: ../view/index.php');           
+        }
     }
 
     public static function salvar($usuario) {
         try {
             UsuarioDAO::salvar($usuario);
-            self::retornar();
+            self::retornar('usuarios.php');
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
