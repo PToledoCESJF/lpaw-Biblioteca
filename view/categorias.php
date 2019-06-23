@@ -43,7 +43,7 @@ require_once '../config/Global.php';
                         <h3 class="title">Categoria</h3>
                     </div>
                     <div class="content">
-                        <form action="categoria.php" method="post">
+                        <form action="categorias.php" method="post">
                             <input type="hidden" name="metodo" value="salvar">
                             <input type="hidden" name="id_categoria" value="<?php echo $categoria->getIdCategoria() ?>">
                             <div class="row">

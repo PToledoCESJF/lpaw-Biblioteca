@@ -1,3 +1,5 @@
+/* global Chartist */
+
 type = ['','info','success','warning','danger'];
 
 

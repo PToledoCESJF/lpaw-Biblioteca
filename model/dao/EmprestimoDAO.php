@@ -94,6 +94,17 @@ class EmprestimoDAO {
         }
     }
 
+    public static function listarEmprestimoExemplar() {
+        try {
+            $conexao = Conexao::conectar();
+            $stmt = $conexao->prepare("SELECT * FROM tb_emprestimos_exemplares");
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+
     public static function BuscarPorId($id) {
         try {
             $conexao = Conexao::conectar();
@@ -158,6 +169,39 @@ class EmprestimoDAO {
             $stmt->bindValue(':data_devolucao', $emprestimo->getDataDevolucao());
             $stmt->bindValue(':id_emprestimo', $emprestimo->getIdEmprestimo());
             $stmt->execute();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+    
+    public static function listarEmprestimoPorCategoria(){
+        try {
+            $conexao = Conexao::conectar();
+            $stmt = $conexao->prepare("SELECT empex.livro, empex.exemplar, empex.data_reserva, "
+                    . "empex.data_emprestimo, li.categoria, cat.nome_categoria "
+                    . "FROM tb_emprestimos_exemplares AS empex "
+                    . "INNER JOIN tb_livros AS li INNER JOIN tb_categorias AS cat "
+                    . "ON empex.livro = li.id_livro AND li.categoria = cat.id_categoria "
+                    . "WHERE data_reserva IS NOT NULL");
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+
+    
+    public static function listarReservaEmprestimo(){
+        try {
+            $conexao = Conexao::conectar();
+            $stmt = $conexao->prepare("SELECT data_reserva, "
+                    . "empex.data_emprestimo "
+                    . "FROM tb_emprestimos_exemplares AS empex "
+                    . "INNER JOIN tb_livros AS li INNER JOIN tb_categorias AS cat "
+                    . "ON empex.livro = li.id_livro AND li.categoria = cat.id_categoria "
+                    . "WHERE data_reserva IS NOT NULL");
+            $stmt->execute();
+            return $stmt->fetchAll();
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }

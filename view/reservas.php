@@ -164,7 +164,7 @@ Template::header();
                                                 $idEmpExemp = $reserva['id_emprestimo_exemplar'];
                                                 $imagem = $linha['imagem'];
                                                 $exemplar = $reserva['exemplar'];
-                                                $previsaoDev = date('d/m/Y', strtotime('+' . PRAZO  . ' days'));
+                                                $previsaoDev = date('d/m/Y', strtotime($dtEmprestimo . '+' . PRAZO . ' days'));
                                                 $dtDevolucao = $reserva['data_devolucao'];
                                                 if($dtDevolucao !== NULL){
                                                     $msg = 'Devolvido';

@@ -113,19 +113,11 @@ Template::header();
                                             <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
 
                                             <div class="footer">
-                                                <div class="legend">
-                                                    <i class="fa fa-circle text-info"></i> Março
-                                                    <i class="fa fa-circle text-danger"></i> Abril
-                                                    <i class="fa fa-circle text-warning"></i> Maio
-                                                </div>
                                                 <hr>
-                                                <div class="stats">
-                                                    <i class="fa fa-clock-o"></i> Dados dos últimos 3 meses
-                                                </div>
+                                                <input type="submit" class="btn btn-primary btn-block active" 
+                                                        name="metodo"  value="reservar">
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary btn-block active" 
-                                                name="metodo"  value="reservar">
                                     </form>
                                 </div>
                             </div>

@@ -38,7 +38,7 @@ class CategoriaController implements iController {
     }
     
     public static function retornar(){
-        header('Location: ../view/categoria.php');
+        header('Location: ../view/categorias.php');
     }
     
     public static function tabelaPaginada(){

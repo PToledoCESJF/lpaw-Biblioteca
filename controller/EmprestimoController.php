@@ -80,6 +80,22 @@ class EmprestimoController {
             Erro::trataErro($exc);
         }
     }
+    
+    public static function listarEmprestimoExemplar() {
+        try {
+            return EmprestimoDAO::listarEmprestimoExemplar();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+    
+    public static function listarEmprestimoPorCategoria() {
+        try {
+            return EmprestimoDAO::listarEmprestimoPorCategoria();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
 
     public static function emprestar($emprestimoLista){
         try {

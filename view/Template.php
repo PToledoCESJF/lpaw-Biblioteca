@@ -20,12 +20,12 @@ class Template {
                 <meta charset='utf-8' />
                 <link rel='icon' type='image/png' href='../assets/img/favicon.ico'>
                 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
-
+                
                 <title>BiblioteCasa: </title>
 
                 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
                 <meta name='viewport' content='width=device-width' />
-
+                
                 <!-- Bootstrap core CSS     -->
                 <link href='../assets/css/bootstrap.min.css' rel='stylesheet' />
 
@@ -40,8 +40,8 @@ class Template {
 
 
                 <!--     Fonts and icons     -->
-                <link href='../assets/css/font-awesome.min.css' rel='stylesheet'>
-                <link href='../assets/css/family.Roboto.400.700.300.css' rel='stylesheet' type='text/css'>
+                <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet'>
+                <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
                 <link href='../assets/css/pe-icon-7-stroke.css' rel='stylesheet' />
             </head>
             <body>
@@ -50,12 +50,12 @@ class Template {
 
     public static function sidebar() {
 
-        $permicoes = ArreiosAuxController::getSubGrupoUsuario($_SESSION['usuario_grupo']);
+        $permissoes = ArreiosAuxController::getSubGrupoUsuario($_SESSION['usuario_grupo']);
 
         echo "
         <!-- inicio do menu lateral -->
         <div class='wrapper'>
-            <div class='sidebar' data-color='' data-image='../assets/img/sidebar-6.png'>
+            <div class='sidebar' data-color='azure' data-image='../assets/img/sidebar-6.png'>
 
                 <!--
 
@@ -73,23 +73,23 @@ class Template {
                         </a>
                     </div>                   
                     <ul class='nav'>
-                        <li class='active'>
+                        <li>
                             <a href='../view/index.php'>
                                 <p>Acervo</p>
                             </a>
-                        </li>";
-                        if($permicoes != NULL){
-                            foreach ($permicoes as $linhaPer){
+                        </li class='active-pro'>";
+                        if($permissoes != NULL){
+                            foreach ($permissoes as $linhaPermissao){
                             echo "<li>
-                                    <a href='../view/$linhaPer.php'>
-                                        <p>$linhaPer</p>
+                                    <a href='../view/$linhaPermissao.php'>
+                                        <p>$linhaPermissao</p>
                                     </a>
                                 </li>";
                             }
                         }
 
                         echo " 
-                        <li class='active-pro'>
+                        <li>
                             <a href='../view/logout.php?metodo=logout'>
                                 <p>Logout</p>
                             </a>
@@ -223,7 +223,7 @@ class Template {
                     </ul>
                 </nav>
                 <p class='copyright pull-right'>
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href='http://www.creative-tim.com'>Ler Para Crer</a>, made with love for a better web
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href='../view/index.php'>BiblioteCasa</a>
                 </p>
             </div>
         </footer>
@@ -255,6 +255,7 @@ class Template {
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src='../assets/js/demo.js'></script>
+
 <!--
 <script type='text/javascript'>
     $(document).ready(function(){
@@ -263,7 +264,7 @@ class Template {
 
             $.notify({
             icon: 'pe-7s-gift',
-            message: 'Benvindo à <b>Biblioteca Ler para Crer</b> - sua visita é muito importante para nós. Boa Leitura.'
+            message: 'Benvindo à <b>BiblioteCasa</b> - sua visita é muito importante para nós. Boa Leitura.'
 
         },{
             type: 'info',

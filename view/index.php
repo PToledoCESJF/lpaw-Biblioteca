@@ -32,7 +32,7 @@ Template::header();
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 card">
                 <h3>Olá, <strong><?php echo $_SESSION['usuario_nome'] ?>!</strong> Seja bem-vindo ao Bibliotecasa</h3>
                 <form action="index.php" method="POST">
                     <input type="hidden" name="metodo" value="detalhar">
@@ -46,7 +46,7 @@ Template::header();
                                              src='../assets/img/books/<?php echo $linha['imagem'] ?>' 
                                              style="width: 100%; height: 100%; padding: 5px;" />
                                     </button> 
-                                    <p>Qualquer outra informação vai </p>
+                                    <p></p>
                                 </div>
                         <?php endforeach; ?>
                     </div>

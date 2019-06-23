@@ -29,6 +29,21 @@ class UsuarioDAO implements iDao{
         }
     }
     
+    public static function novaSenha($idUsuario, $senha) {
+        try {
+            $conexao = Conexao::conectar();
+            $stmt = $conexao->prepare("UPDATE tb_usuarios SET senha = :senha "
+                    . "WHERE id_usuario = :id_usuario");
+
+            $stmt->bindValue(':id_usuario', $idUsuario);
+            $stmt->bindValue(':senha', $senha);
+            $stmt->execute();
+            return TRUE;
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+    
     public static function BuscarPorId($id) {
         try {
             $conexao = Conexao::conectar();

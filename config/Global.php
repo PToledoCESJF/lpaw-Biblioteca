@@ -16,5 +16,7 @@ require_once 'Config.php';
             require_once '../config/' . $nomeClasse . '.php';
         }elseif (file_exists('../view/' . $nomeClasse . '.php')){
             require_once '../view/' . $nomeClasse . '.php';
+        }elseif (file_exists('../PHPlot-master/phplot/' . $nomeClasse . '.php')){
+            require_once '../PHPlot-master/phplot/' . $nomeClasse . '.php';
         }
     }

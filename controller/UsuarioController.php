@@ -26,6 +26,86 @@ class UsuarioController{
             }
         }
     }
+    
+    public static function consultarEmail($email){
+        $usuarioLista = self::listar();
+        foreach ($usuarioLista as $usuario){
+            if($usuario['email'] == $email){
+                $idUsuario = $usuario['id_usuario'];
+                return self::enviaPorEmail($idUsuario, $email);
+            }
+        }
+        return FALSE;
+    }
+    
+    public static function novaSenha($idUsuario, $senha){
+        $senhaMd5 = md5($senha);
+        if(UsuarioDAO::novaSenha($idUsuario, $senhaMd5)){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    private static function enviaPorEmail($idUsuario, $email){
+        
+        $retornar = "
+            <html><body><div>
+            <form action='http://localhost:8090/biblioteca/view/nova_senha.php' method='POST'>
+            <p>Esqueceu sua senha?</p>
+            <p>Não se preocupe, Clique no botão a baixo e crie uma nova senha.</p>
+            <button type='submit' name='id' value='$idUsuario'>Nova Senha</button>
+            </form></div></body></html>";
+        
+        // Load Composer's autoloader
+        //require 'vendor/autoload.php';
+
+        require '../PHPMailer/src/Exception.php';
+        require '../PHPMailer/src/PHPMailer.php';
+        require '../PHPMailer/src/SMTP.php';
+        
+        // Instantiation and passing `true` enables exceptions
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+//        $mail = new PHPMailer(true);
+
+        try {
+//            Server settings
+//            $mail->SMTPDebug = 2;                                       // Enable verbose debug output
+            $mail->isSMTP();                                            // Set mailer to use SMTP
+            $mail->Host = 'smtp.gmail.com';                         // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                                   // Enable SMTP authentication
+            $mail->Username = 'bibliotecasa528@gmail.com';                     // SMTP username
+            $mail->Password = 'Agencia32811379';                               // SMTP password
+            $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            //Recipients
+            $mail->setFrom($email, 'Recuperacao de Senha');
+            $mail->addAddress($email);     // Add a recipient
+          /*
+            $mail->addAddress('ellen@example.com');               // Name is optional
+            $mail->addReplyTo('info@example.com', 'Information');
+            $mail->addCC('cc@example.com');
+            $mail->addBCC('bcc@example.com');
+          */
+            // Attachments
+          //  $mail->addAttachment('AQUI VAI O ARQUIVO');         // Add attachments
+          //  $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+            // Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = 'Recuperacao de Senha';
+            $mail->Body    = $retornar;
+         //   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+            return TRUE;
+        } catch (Exception $e) {
+            return FALSE;
+        }
+        
+    }
+    
 
     public static function carregar($idUsuario, $nomeUsuario, $sobrenomeUsuario, 
             $grupo, $email, $senha) {
@@ -180,4 +260,7 @@ class UsuarioController{
             }
         }
     }
+    
+    
+    
 }
