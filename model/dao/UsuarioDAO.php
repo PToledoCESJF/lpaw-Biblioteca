@@ -17,12 +17,12 @@ class UsuarioDAO implements iDao{
             }else{
             $stmt = $conexao->prepare("INSERT INTO tb_usuarios(nome_usuario, sobrenome_usuario, "
                     . "grupo, email, senha) VALUES(:nome, :sobrenome, :grupo, :email, :senha)");
+            $stmt->bindValue(':senha', $usuario->getSenha());
             }
             $stmt->bindValue(':nome', $usuario->getNomeUsuario());
             $stmt->bindValue(':sobrenome', $usuario->getSobrenomeUsuario());
             $stmt->bindValue(':grupo', $usuario->getGrupo());
             $stmt->bindValue(':email', $usuario->getEmail());
-            //$stmt->bindValue(':senha', $usuario->getSenha());
             $stmt->execute();
         } catch (Exception $exc) {
             Erro::trataErro($exc);

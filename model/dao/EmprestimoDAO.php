@@ -13,9 +13,10 @@ class EmprestimoDAO {
             
             $idEmprestimo = self::BuscarUltimoId();
             foreach ($reserva as $livro){
-                $stmtItems = $conexao->prepare("INSERT INTO tb_emprestimos_exemplares(emprestimo, livro) "
-                        . "VALUES(:emprestimo, :livro)");
+                $stmtItems = $conexao->prepare("INSERT INTO tb_emprestimos_exemplares(emprestimo, livro, data_reserva) "
+                        . "VALUES(:emprestimo, :livro, :data_reserva)");
                 $stmtItems->bindValue(':emprestimo', $idEmprestimo['id_emprestimo']);
+                $stmtItems->bindValue(':data_reserva', date('Y-m-d'));
                 $stmtItems->bindValue(':livro', $livro);
                 $stmtItems->execute();
             }
@@ -67,9 +68,10 @@ class EmprestimoDAO {
             $conexao = Conexao::conectar();
             $queryListar = "SELECT em.id_emprestimo, em.usuario, "
                     . "emex.id_emprestimo_exemplar, emex.livro, emex.exemplar, "
-                    . "emex.data_emprestimo, emex.data_devolucao "
-                    . "FROM tb_emprestimos em INNER JOIN tb_emprestimos_exemplares emex "
-                    . "ON em.id_emprestimo = emex.emprestimo WHERE em.usuario = :id_usuario";
+                    . "emex.data_emprestimo, emex.data_devolucao FROM tb_emprestimos em "
+                    . "INNER JOIN tb_emprestimos_exemplares emex "
+                    . "ON em.id_emprestimo = emex.emprestimo "                    
+                    . "WHERE em.usuario = :id_usuario";
             $stmt = $conexao->prepare($queryListar);
             $stmt->bindValue(':id_usuario', $idUsuario);
             $stmt->execute();
@@ -118,7 +120,24 @@ class EmprestimoDAO {
         }
     }
     
-        public static function emprestar($idEmprestimo, $idExemplar){
+        
+    public static function renovarEmprestimo($emprestimo){
+        try {
+            $conexao = Conexao::conectar();
+            $stmt = $conexao->prepare("INSERT INTO tb_emprestimos(exemplar, usuario, "
+                    . "data_emprestimo observacao) "
+                    . "VALUES(:exemplar, :usuario, :data_emprestimo, :observacao)");
+            $stmt->bindValue(':exemplar', $emprestimo->getExemplar());
+            $stmt->bindValue(':usuario', $emprestimo->getUsuario());
+            $stmt->bindValue(':data_emprestimo', $emprestimo->getDataEmprestimo());
+            $stmt->bindValue(':observacao', $emprestimo->getObservacao());
+            $stmt->execute();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    }
+    
+    public static function emprestar($idEmprestimo, $idExemplar){
         try {
             $hoje = date("Y-m-d");
             $conexao = Conexao::conectar();
@@ -144,31 +163,26 @@ class EmprestimoDAO {
         }
     }
     
-    public static function renovarEmprestimo($emprestimo){
+
+    public static function devolver($idEmpExemp, $idExemplar){
         try {
             $conexao = Conexao::conectar();
-            $stmt = $conexao->prepare("INSERT INTO tb_emprestimos(exemplar, usuario, "
-                    . "data_emprestimo observacao) "
-                    . "VALUES(:exemplar, :usuario, :data_emprestimo, :observacao)");
-            $stmt->bindValue(':exemplar', $emprestimo->getExemplar());
-            $stmt->bindValue(':usuario', $emprestimo->getUsuario());
-            $stmt->bindValue(':data_emprestimo', $emprestimo->getDataEmprestimo());
-            $stmt->bindValue(':observacao', $emprestimo->getObservacao());
-            $stmt->execute();
-        } catch (Exception $exc) {
-            Erro::trataErro($exc);
-        }
-    }
+            
+            $stmtExp = $conexao->prepare("UPDATE tb_exemplares SET emprestado = :emprestado "
+                    . "WHERE id_exemplar = :id_exemplar");
+            $stmtExp->bindValue(':emprestado', '0');
+            $stmtExp->bindValue(':id_exemplar', $idExemplar);
+            $stmtExp->execute();
+            
+            $stmtEmpExp = $conexao->prepare("UPDATE tb_emprestimos_exemplares "
+                    . "SET data_devolucao = :data_devolucao "
+                    . "WHERE id_emprestimo_exemplar = :id_emprestimo_exemplar");
 
-    public static function devolver($emprestimo){
-        try {
-            $conexao = Conexao::conectar();
-            $stmt = $conexao->prepare("UPDATE tb_emprestimos SET data_devolucao = :data_devolucao "
-                    . "WHERE = id_emprestimo :id_emprestimo");
-
-            $stmt->bindValue(':data_devolucao', $emprestimo->getDataDevolucao());
-            $stmt->bindValue(':id_emprestimo', $emprestimo->getIdEmprestimo());
-            $stmt->execute();
+            $stmtEmpExp->bindValue(':data_devolucao', date('Y-m-d'));
+            $stmtEmpExp->bindValue(':id_emprestimo_exemplar', $idEmpExemp);
+            $stmtEmpExp->execute();
+            
+            
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }

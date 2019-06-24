@@ -168,11 +168,10 @@ class Template {
 
                               </a>
                               <ul class='dropdown-menu'>
-                                <li><a href='../view/usuario.php'>Meus Dados</a></li>
+                                <li><a href='../view/meus_dados.php'>Meus Dados</a></li>
                                 <li><a href='../view/reservas.php?w3wb=ds1fa5d4f53'>Meus Empréstimos</a></li>
-                                <li><a href='../view/exemplar.php'>Lista de Desejos</a></li>
                                 <li class='divider'></li>
-                                <li><a href='#'>Separated link</a></li>
+                                <li><a href='../view/logout.php?metodo=logout'>Logout</a></li>
                               </ul>
                         </li>
                         <li>
@@ -188,9 +187,6 @@ class Template {
 
 <!-- fim do menu superior -->
             ";
- 
-        echo 'Mensagens vão aki!! ';
-
     }
 
     public static function footer() {

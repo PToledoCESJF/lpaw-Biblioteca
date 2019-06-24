@@ -151,8 +151,10 @@ class UsuarioController{
     public static function retornar($origem) {
         if(stristr($origem, 'livro_detalhe')){
             header('Location: ../view/livro_reserva.php');
-        } elseif(stristr ($origem, 'usuarios.php')) {
+        } elseif(stristr ($origem, 'usuarios.php') && ($_SESSION['usuario_grupo'] == 3 || $_SESSION['usuario_grupo'] == 5)) {
             header('Location:../view/usuarios.php');
+        }elseif (stristr($origem, 'login.php')) {
+            header('Location: ../view/index.php');           
         } else {
             header('Location: ../view/index.php');           
         }

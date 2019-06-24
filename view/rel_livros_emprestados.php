@@ -33,7 +33,7 @@ foreach ($listaEmprestimos as $rowEmp){
         $pagina .= '<strong>Título: ' . $rowEmp['titulo'] . '</strong><br/>';
         $pagina .= '<strong>Usuário:</strong> ' . $rowEmp['nome_usuario']. ' ' . $rowEmp['sobrenome_usuario'] . '<br/>';
         $pagina .= '<strong>Exemplar:</strong> ' . $rowEmp['exemplar'] . '<br/>';
-        $pagina .= '<strong>Data do Empréstimo:</strong> ' . $rowEmp['data_emprestimo']. '<br/><hr>';
+        $pagina .= '<strong>Data do Empréstimo:</strong> ' . date('d/m/Y', strtotime($rowEmp['data_emprestimo'])). '<br/><hr>';
     }
 }
 

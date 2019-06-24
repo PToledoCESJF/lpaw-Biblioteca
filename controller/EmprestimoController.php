@@ -115,8 +115,14 @@ class EmprestimoController {
 
     }
 
-    public static function devolver($emprestimo){
-
+    public static function devolver($idEmpExemp, $idExemplar){
+        try {
+            EmprestimoDAO::devolver($idEmpExemp, $idExemplar);
+            return TRUE;
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
+        }
+    
     }
      
     public static function tabelaPaginada(){

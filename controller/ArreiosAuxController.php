@@ -27,18 +27,18 @@ class ArreiosAuxController {
             '0' => 'Visitante',
             '1' => 'Aluno', 
             '2' => 'Professor', 
-            '3' => 'Gerente', 
-            '4' => 'Bibliotecario', 
-            '5' => 'Atendente'];
+            '3' => 'Atendente',
+            '4' => 'Bibliotecario',
+            '5' => 'Gerente'];
     }
 
     public static function getSubGrupoUsuario($usuario){
-        if ($usuario == 3) {
+        if ($usuario == 5) {
             return ['graficos', 'relatorios', 'emprestimos', 'reservas', 'usuarios', 
                 'livros', 'exemplares', 'categorias', 'autores', 'editoras'];
         }elseif ($usuario == 4) {
             return ['livros', 'exemplares', 'categorias', 'autores', 'editoras'];
-        }elseif ($usuario == 5) {
+        }elseif ($usuario == 3) {
             return ['emprestimos', 'reservas', 'usuarios'];
         }
     }

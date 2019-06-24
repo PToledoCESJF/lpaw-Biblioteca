@@ -2,7 +2,7 @@
 require_once '../config/Global.php';
 require_once '../assets/vendor/autoload.php';
 
-$listaEmprestimos = RelatoriosController::listarEmprestimos();
+$listaEmprestimos = RelatoriosController::listarReservas();
 
 $pagina = "
     <html>
@@ -29,7 +29,7 @@ $pagina = "
     <hr>";
 
 foreach ($listaEmprestimos as $rowEmp){
-    if($rowEmp['data_emprestimo'] == 0 && $rowEmp['data_devolucao'] == NULL){
+    if($rowEmp['exemplar'] == NULL || $rowEmp['data_emprestimo'] == NULL){
         $pagina .= '<strong>Título: ' . $rowEmp['titulo'] . '</strong><br/>';
         $pagina .= '<strong>Usuário:</strong> ' . $rowEmp['nome_usuario']. ' ' . $rowEmp['sobrenome_usuario'] . '<br/>';
         $pagina .= '<strong>Data da Reserva:</strong> ' . date('d/m/Y', strtotime($rowEmp['data_reserva'])). '<br/><hr>';
@@ -51,4 +51,5 @@ $mpdf = new Mpdf\Mpdf();
 $mpdf->WriteHTML($pagina);
 $mpdf->SetHTMLFooter($footer);
 $mpdf->Output($arquivo, 'I');
+
 ?>

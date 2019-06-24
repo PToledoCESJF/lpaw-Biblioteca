@@ -25,5 +25,13 @@ class RelatoriosController {
         } catch (Exception $exc) {
             Erro::trataErro($exc);
         }
+    }
+    
+    public static function listarReservas(){
+        try {
+            return RelatoriosDAO::listarReservas();
+        } catch (Exception $exc) {
+            Erro::trataErro($exc);
         }
+    }
 }
